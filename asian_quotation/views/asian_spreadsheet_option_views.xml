@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="asia_spreadsheet_option__tree_view" model="ir.ui.view">
+        <field name="name">asia.spreadsheet.option.tree_view</field>
+        <field name="model">asia.spreadsheet.option</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="create_uid" string="Người tạo"/>
+                <field name="create_date" string="Ngày tạo"/>
+                <field name="write_date" string="Ngày chỉnh sửa gần nhất"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="asia_spreadsheet_option__form_view" model="ir.ui.view">
+        <field name="name">asia.spreadsheet.option.form_view</field>
+        <field name="model">asia.spreadsheet.option</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="oe_title">
+                    <label for="name"/>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                </div>
+                <group>
+                    <field name="apply"/>
+                </group>
+                <group>
+                    <field name="asia_spreadsheet_team_option_ids" nolabel="1" widget="one2many">
+                        <tree editable="bottom">
+                            <field name="asia_spreadsheet_option_id" invisible="1"/>
+                            <field name="type_line" invisible="1"/>
+                            <field name="name"/>
+                            <field name="profit"/>
+                            <field name="car_4"/>
+                            <field name="car_7"/>
+                            <field name="car_16"/>
+                            <field name="car_29"/>
+                            <field name="car_35"/>
+                            <field name="car_45_1"/>
+                            <field name="car_45_2"/>
+                            <field name="car_45_3"/>
+                            <field name="car_45_4"/>
+                            <field name="apply"/>
+                        </tree>
+                    </field>
+                </group>
+                <group>
+                    <field name="asia_spreadsheet_net_option_ids" nolabel="1" widget="one2many">
+                        <tree editable="bottom">
+                            <field name="asia_spreadsheet_option_id" invisible="1"/>
+                            <field name="type_line" invisible="1"/>
+                            <field name="name"/>
+                            <field name="profit"/>
+                            <field name="car_4"/>
+                            <field name="car_7"/>
+                            <field name="car_16"/>
+                            <field name="car_29"/>
+                            <field name="car_35"/>
+                            <field name="car_45_1"/>
+                            <field name="car_45_2"/>
+                            <field name="car_45_3"/>
+                            <field name="car_45_4"/>
+                            <field name="apply"/>
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <record id="asia_spreadsheet_option__act_window" model="ir.actions.act_window">
+        <field name="name">Option</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">asia.spreadsheet.option</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="asia_spreadsheet_option_module_menu" model="ir.ui.menu">
+        <field name="name">Option</field>
+        <field name="parent_id" ref="asia_quotation_module_menu"/>
+        <field name="action" ref="asia_spreadsheet_option__act_window"/>
+    </record>
+</odoo>
