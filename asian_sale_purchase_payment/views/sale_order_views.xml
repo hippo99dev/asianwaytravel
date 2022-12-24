@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sale_order__form_view" model="ir.ui.view">
+        <field name="name">sale.order.form_view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="asia_sale.asia_sale_order_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="replace">
+                <notebook>
+                    <page string="Hành khách">
+                        <div>
+                            <div class="asia_title">
+                                Trưởng đoàn
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="leader_firstname"/>
+                                    <field name="leader_lastname"/>
+                                    <field name="leader_title"/>
+                                </group>
+                                <group>
+                                    <field name="leader_phone"/>
+                                    <field name="leader_email"/>
+                                    <field name="others_info"/>
+                                    <field name="leader_nationality" invisible="0"/>
+                                </group>
+                            </group>
+                        </div>
+                        <div>
+                            <div class="asia_title">
+                                Hành khách
+                            </div>
+                            <field name="sale_order_passengers_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="first_name"/>
+                                    <field name="last_name"/>
+                                    <field name="gender"/>
+                                    <field name="date_birth" placeholder="dd/mm/yyyy" required="1"/>
+                                    <field name="nationality"/>
+                                    <field name="passport"/>
+                                    <field name="note"/>
+                                    <field name="is_tour_lead"/>
+                                    <field name="user_id" invisible="1"/>
+                                    <field name="sale_order_id" invisible="1"/>
+                                    <field name="check_boolean" groups="base.group_no_one"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </page>
+                    <page string="Khách sạn">
+                        <group>
+                            <group>
+                                <field name="hotel_guide_note"/>
+                            </group>
+                            <group>
+                                <field name="hotel_customer_note"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field
+                                    name="hotel_sub_line_ids" nolabel="1"
+                                    options="{'no_open': True}"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                                    context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'hotel'}"
+                            >
+                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                    <field name="template_id" groups="base.group_no_one"/>
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="price_unit" string="Giá" groups="base.group_no_one"/>
+                                    <field name="old_price" string="Giá cũ" groups="base.group_no_one"/>
+                                    <field name="date_checkin" string="Ngày checkin" required="1"/>
+                                    <field name="date_checkout" required="1"/>
+                                    <field name="vendor_id" string="Nhà cung cấp"/>
+                                    <field
+                                            required="1"
+                                            name="product_id"
+                                            options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                            force_save="1"
+                                            string="Dịch vụ"
+                                            domain="[('product_types', '=', 'hotel')]"
+                                            context="{'show_price': {'date_checkin': date_checkin, 'date_checkout': date_checkout, 'sol_qty': product_uom_qty}}"
+                                    />
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="room_detail"/>
+                                    <field name="requirement" placeholder="Vd: Không ở quá 3 người" invisible="1"/>
+                                    <field name="note" placeholder="Vd: 30m2 view biển"/>
+                                    <field name="is_replace"/>
+                                    <field name="replace_product" class="asia-similar-product" readonly="1"
+                                           widget="many2many_tags"/>
+                                    <field name="product_uom_qty" string="Số lượng"/>
+                                    <field name="foc"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="is_shared_cost" string="CPC"/>
+                                    <field name="is_extra_cost" string="CPR"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="hotel_order_line_ids" nolabel="1" options="{'no_open': True}"
+                                   context="{'form_view_ref' : 'asia_sale.sale_order_line_form','tree_view_ref' : 'asia_sale.sale_order_line_tree'}"/>
+                        </group>
+                        <group>
+                            <field name="hotel_total" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Nhà hàng">
+                        <group>
+                            <group>
+                                <field name="meal_guide_note"/>
+                            </group>
+                            <group>
+                                <field name="meal_customer_note"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field
+                                    name="meal_sub_line_ids" nolabel="1"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    options="{'no_open': True}"
+                                    attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                                    context="{'default_date_checkin':date_start, 'default_product_types': 'meal'}"
+                            >
+                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                    <field name="currency_id" groups="base.group_no_one"/>
+                                    <field name="template_id" groups="base.group_no_one"/>
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="date_checkout" groups="base.group_no_one"/>
+                                    <field name="date_checkin" required="1"/>
+                                    <field name="vendor_id" string="Nhà cung cấp"/>
+                                    <field
+                                            required="1"
+                                            name="product_id"
+                                            options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                            force_save="1"
+                                            string="Dịch vụ"
+                                            domain="[('product_types', '=', 'meal')]"
+                                            context="{'show_price': {'date_checkin': date_checkin, 'date_checkout': date_checkout, 'sol_qty': product_uom_qty}}"
+                                    />
+                                    <field name="meal"/>
+                                    <field name="requirement" placeholder="Vd: Không ở quá 3 người" invisible="1"/>
+                                    <field name="note" placeholder="Vd: 30m2 view biển"/>
+                                    <field name="description"/>
+                                    <field name="product_uom_qty" string="Số lượng"/>
+                                    <field name="price_unit" widget="float"/>
+                                    <field name="old_price" string="Giá cũ" groups="base.group_no_one"/>
+                                    <field name="foc"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="is_shared_cost" string="CPC"/>
+                                    <field name="is_extra_cost" string="CPR"/>
+                                    <field name="state"/>
+
+                                </tree>
+                            </field>
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="meal_order_line_ids"
+                                   nolabel="1"
+                                   options="{'no_open': True}"
+                                   context="{'form_view_ref' : 'asia_sale.sale_order_line_form','tree_view_ref' : 'asia_sale.sale_order_line_tree'}"/>
+                        </group>
+                        <group>
+                            <field name="meal_total" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Vé thắng cảnh">
+                        <group>
+                            <group>
+                                <field name="ticket_guide_note"/>
+                            </group>
+                            <group>
+                                <field name="ticket_customer_note"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field
+                                    name="ticket_sub_line_ids" nolabel="1"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    options="{'no_open': True}"
+                                    attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                                    context="{'default_product_types':'ticket', 'tree_view_ref' : 'asia_sale.sale_order_sub_line_tree','default_date_checkin':date_start}"
+                            />
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="ticket_order_line_ids"
+                                   nolabel="1"
+                                   options="{'no_open': True}"
+                                   context="{'form_view_ref' : 'asia_sale.sale_order_line_form', 'tree_view_ref' : 'asia_sale.sale_order_line_tree'}"/>
+                        </group>
+                        <group>
+                            <field name="ticket_total" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Xe vận chuyển">
+                        <group>
+                            <group>
+                                <field name="transportation_guide_note"/>
+                            </group>
+                            <group>
+                                <field name="transportation_customer_note"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field
+                                    name="transportation_sub_line_ids" nolabel="1"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    options="{'no_open': True}"
+                                    attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                                    context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'transportation'}"
+
+                            >
+                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                    <field name="currency_id" groups="base.group_no_one"/>
+                                    <field name="template_id" groups="base.group_no_one"/>
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="product_qty" groups="base.group_no_one"/>
+                                    <field name="date_checkin" required="1" string="Ngày đi"/>
+                                    <field name="date_checkout" required="1" string="Ngày về"/>
+                                    <field name="vendor_id" string="Nhà cung cấp"/>
+                                    <field
+                                            required="1"
+                                            name="product_id"
+                                            options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                            force_save="1"
+                                            string="Type of transport"
+                                            domain="[('product_types', '=', 'transportation')]"
+                                            context="{'show_price': {'date_checkin': date_checkin, 'date_checkout': date_checkout, 'sol_qty': product_uom_qty}}"
+                                    />
+                                    <field name="type_car" string="Brand of transport"/>
+                                    <field name="region"/>
+                                    <field name="note" placeholder="Vd: 30m2 view biển"/>
+                                    <field name="route_id" options="{'create': false}"
+                                           widget="many2many_tags"
+                                           attrs="{'readonly':[('product_id','=',False)]}"/>
+                                    <field name="requirement" placeholder="Vd: Không ở quá 3 người"
+                                           invisible="1"/>
+                                    <field name="km"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="price_unit" widget="float"/>
+                                    <field name="old_price" string="Giá cũ" groups="base.group_no_one"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="is_shared_cost" string="CPC"/>
+                                    <field name="is_extra_cost" string="CPR"/>
+                                    <field name="state"/>
+
+                                </tree>
+                            </field>
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="transportation_order_line_ids"
+                                   nolabel="1"
+                                   options="{'no_open': True}"
+                                   context="{'form_view_ref' : 'asia_sale.sale_order_line_form','tree_view_ref' : 'asia_sale.sale_order_line_tree'}"/>
+                        </group>
+                        <group>
+                            <field name="tranfor_total" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Di chuyển">
+                        <group>
+                            <group>
+                                <field name="plane_ticket_guide_note"/>
+                            </group>
+                            <group>
+                                <field name="plane_ticket_customer_note"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field
+                                    name="plane_ticket_sub_line_ids" nolabel="1"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    options="{'no_open': True}"
+                                    attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                                    context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'plane_ticket'}"
+                            >
+                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                    <field name="currency_id" groups="base.group_no_one"/>
+                                    <field name="template_id" groups="base.group_no_one"/>
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="date_checkin" required="1" string="Ngày đi"/>
+                                    <field name="date_checkout" required="1" string="Ngày về"/>
+                                    <field name="vendor_id" string="Nhà cung cấp"/>
+                                    <field
+                                            required="1"
+                                            name="product_id"
+                                            options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                            force_save="1"
+                                            string="Route"
+                                            domain="[('product_types', '=', 'plane_ticket')]"
+                                            context="{'show_price': {'date_checkin': date_checkin, 'date_checkout': date_checkout, 'sol_qty': product_uom_qty}}"
+                                    />
+                                    <field name="region"/>
+                                    <field name="note" placeholder="Vd: 30m2 view biển"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="foc"/>
+                                    <field name="price_unit" widget="float"/>
+                                    <field name="old_price" string="Giá cũ" groups="base.group_no_one"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="is_shared_cost" string="CPC"/>
+                                    <field name="is_extra_cost" string="CPR"/>
+                                    <field name="state"/>
+
+                                </tree>
+                            </field>
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="plane_ticket_order_line_ids"
+                                   nolabel="1"
+                                   options="{'no_open': True}"
+                                   context="{'form_view_ref' : 'asia_sale.sale_order_line_form','tree_view_ref' : 'asia_sale.sale_order_line_tree'}"/>
+                        </group>
+                        <group>
+                            <field name="plan_tiket_total" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Hướng dẫn viên">
+                        <group>
+                            <group>
+                                <field name="guider_guide_note"/>
+                            </group>
+                            <group>
+                                <field name="guider_customer_note"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field name="guider_sub_line_ids" nolabel="1" widget="section_and_note_one2many"
+                               mode="tree" options="{'no_open': True}"
+                               attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                               context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'guider'}">
+                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                    <field name="template_id" groups="base.group_no_one"/>
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="price_unit" string="Giá" groups="base.group_no_one"/>
+                                    <field name="old_price" string="Giá cũ" groups="base.group_no_one"/>
+                                    <field name="date_checkin" required="1" string="Ngày bắt đầu"/>
+                                    <field name="date_checkout" string="Ngày kết thúc"/>
+                                    <field name="vendor_id" string="Nhà cung cấp"/>
+                                    <field name="phone" invisible="1"/>
+                                    <field name="product_id" options="{'no_create': True, 'no_edit': True}"
+                                           force_save="1" string="Ngôn ngữ"
+                                           domain="[('product_types', '=', 'guider')]"
+                                           context="{'partner_id': parent.partner_id,'pricelist': parent.pricelist_id,'company_id': parent.company_id, 'show_price': {'date_checkin': date_checkin, 'date_checkout': date_checkout, 'sol_qty': product_uom_qty}}"/>
+                                    <field name="guider_id" string="Hướng dẫn viên"
+                                           domain="[('vendor_id', '=', vendor_id),('act', '=', True)]"
+                                           attrs="{'readonly':[('product_id','=',False)]}"
+                                           options="{'no_create': True, 'no_edit': True}"/>
+                                    <field name="route"/>
+                                    <field name="note" placeholder="Vd: 30m2 view biển"/>
+                                    <field name="product_uom_qty" string="Số lượng"/>
+                                    <field name="price_unit" widget="float"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="is_shared_cost" string="CPC"/>
+                                    <field name="is_extra_cost" string="CPR"/>
+                                    <field name="state"/>
+
+                                </tree>
+                            </field>
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="guider_order_line_ids"
+                               nolabel="1"
+                               options="{'no_open': True}"
+                               context="{'form_view_ref' : 'asia_sale.sale_order_line_form', 'tree_view_ref' : 'asia_sale.sale_order_line_tree'}"/>
+                        </group>
+                        <group>
+                            <field name="guider_total" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Dịch vụ khác">
+                        <group>
+                            <group>
+                                <field name="others_guide_note"/>
+                            </group>
+                            <group>
+                                <field name="others_customer_note"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field
+                                    name="others_sub_line_ids" nolabel="1"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    options="{'no_open': True}"
+                                    attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                                    context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'others'}"
+
+                            >
+                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                    <field name="currency_id" groups="base.group_no_one"/>
+                                    <field name="template_id" groups="base.group_no_one"/>
+                                    <field name="date_checkin" required="1" string="Ngày đi"/>
+                                    <field name="date_checkout" required="1" string="Ngày về"/>
+                                    <field name="vendor_id" string="Nhà cung cấp"/>
+                                    <field required="1" name="product_id"
+                                           options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                           force_save="1" string="Dịch vụ"
+                                           domain="[('product_types', '=', 'others')]"
+                                           context="{'show_price': {'date_checkin': date_checkin, 'date_checkout': date_checkout, 'sol_qty': product_uom_qty}}"
+                                    />
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="note" placeholder="Vd: 30m2 view biển"/>
+                                    <field name="description1"/>
+                                    <field name="product_uom_qty" string="Số lượng"/>
+                                    <field name="price_unit" widget="float"/>
+                                    <field name="old_price" string="Giá cũ" groups="base.group_no_one"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="foc"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="is_shared_cost" string="CPC"/>
+                                    <field name="is_extra_cost" string="CPR"/>
+                                    <field name="state"/>
+                                </tree>
+
+                            </field>
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="others_order_line_ids"
+                                   nolabel="1"
+                                   options="{'no_open': True}"
+                                   context="{'form_view_ref' : 'asia_sale.sale_order_line_form', 'tree_view_ref' : 'asia_sale.sale_order_line_tree'}"/>
+                        </group>
+                        <group>
+                            <field name="other_total" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Landtour">
+                        <group>
+                            <group>
+                                <field name="landtour_guide_note"/>
+                            </group>
+                            <group>
+                                <field name="landtour_customer_note"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field
+                                    name="landtour_sub_line_ids" nolabel="1"
+                                    widget="section_and_note_one2many"
+                                    mode="tree"
+                                    options="{'no_open': True}"
+                                    attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                                    context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'landtour'}"
+                            >
+                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                    <field name="currency_id" groups="base.group_no_one"/>
+                                    <field name="template_id" groups="base.group_no_one"/>
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="price_unit" string="Giá" groups="base.group_no_one"/>
+                                    <field name="date_checkin" required="1"/>
+                                    <field name="date_checkout" required="1"/>
+                                    <field name="vendor_id" string="Nhà cung cấp"/>
+                                    <field
+                                            required="1"
+                                            name="product_id"
+                                            options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                            force_save="1"
+                                            string="Dịch vụ"
+                                            domain="[('product_types', '=', 'landtour')]"
+                                            context="{'show_price': {'date_checkin': date_checkin, 'date_checkout': date_checkout, 'sol_qty': product_uom_qty}}"
+                                    />
+                                    <field name="product_types" groups="base.group_no_one"/>
+                                    <field name="note" placeholder="Vd: 30m2 view biển"/>
+                                    <field name="description" invisible="1"/>
+                                    <field name="requirement"/>
+                                    <field name="product_uom_qty" string="Số lượng"/>
+                                    <field name="price_unit" widget="float"/>
+                                    <field name="old_price" string="Giá cũ" groups="base.group_no_one"/>
+                                    <field name="foc"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="is_shared_cost" string="CPC"/>
+                                    <field name="is_extra_cost" string="CPR"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+
+
+                        </group>
+                        <group>
+                            <field name="landtour_ids" options="{'no_create': True}" nolabel="1">
+                                <tree editable="bottom" create="0" delete="0">
+                                    <field name="order_id" groups="base.group_no_one"/>
+                                    <field name="subline_id" groups="base.group_no_one"/>
+                                    <field name="component_id"/>
+                                    <field name="vendor_name"/>
+                                    <field name="landtour_name"/>
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="landtour_order_line_ids"
+                                   nolabel="1"
+                                   options="{'no_open': True}"
+                                   context="{'form_view_ref' : 'asia_sale.sale_order_line_form', 'tree_view_ref' : 'asia_sale.sale_order_line_tree'}"/>
+                        </group>
+                        <group>
+                            <field name="landtour_total" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Báo giá">
+                        <group>
+                            <field name="x_quotation_rate"/>
+                            <field name="x_quotation_vat"/>
+                        </group>
+                        <group>
+                            <field name="sale_order_price_list" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="currency_id" groups="base.group_no_one"/>
+                                    <field name="note"/>
+                                    <field name="number_customer"/>
+                                    <field name="cost_per_cus" readonly="1"
+                                           widget="float"/>
+                                    <field name="cost_per_cus_usd" readonly="1"
+                                           widget="float"/>
+                                    <field name="margin" widget="float"/>
+                                    <field name="price_per_cost"
+                                           widget="float"/>
+                                    <field name="price_per_cost_usd"
+                                           widget="float"/>
+                                    <field name="single_suppiment"
+                                           widget="float"/>
+                                    <field name="single_suppiment_usd"
+                                           widget="float"/>
+                                    <field name="foc"/>
+                                    <field name="is_override"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <footer>
+                            <button string="Tạo báo giá" name="buttom_create_quotation" type="object"/>
+                        </footer>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

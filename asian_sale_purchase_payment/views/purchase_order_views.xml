@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="purchase_order__form_view" model="ir.ui.view">
+        <field name="name">purchase.order.form_view</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="asia_purchase.asia_purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <field name="is_guider" invisible="0"/>
+                <div class="oe_button_box" name="button_box" attrs="{'invisible': [('is_guider', '=', False)]}">
+                    <button name="action_view_sale_order_payment" type="object" icon="fa-pencil-square-o w-100">
+                        <p class="w-100 text-center">Dự toán</p>
+                    </button>
+                    <button name="action_view_sale_order_payment_tour_report" type="object" icon="fa-pencil-square-o w-100">
+                        <p class="w-100 text-center">Tour Report</p>
+                    </button>
+                    <button name="export_sale_order_guider" type="object" icon="fa-pencil-square-o w-100">
+                        <p class="w-100 text-center">In cho hướng dẫn viên</p>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

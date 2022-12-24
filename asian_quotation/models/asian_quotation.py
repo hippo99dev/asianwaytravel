@@ -5,10 +5,10 @@ class AsianQuotation(models.Model):
     _name = 'asian.quotation'
     _description = 'Asian Quotation'
 
-    name = fields.Char(string='Tiêu đề')
-    vat = fields.Float(string='VAT', default=0)
+    name = fields.Char(string='Tiêu đề', required=True)
+    vat = fields.Float(string='VAT (%)', default=0, help='Điền vào % VAT. Eg: 25')
     rate = fields.Float(string='Tỉ giá', default=23000)
-    net_price = fields.Float(string='Giá NET SINGLE', compute='_compute_net_price')
+    net_price = fields.Float(string='Giá NET SINGLE (USD)', compute='_compute_net_price')
     asian_spreadsheet_product_ids = fields.Many2many(string='Asian Spreadsheet Product', comodel_name='asian.spreadsheet.product', copy=False)
     asian_spreadsheet_option_ids = fields.One2many(string='Asian Spreadsheet Option', comodel_name='asian.spreadsheet.option', inverse_name='asian_quotation_id', copy=False)
     asian_spreadsheet_team_option_ids = fields.Many2many(string='Asian Spreadsheet Team Option', comodel_name='asian.spreadsheet.team.option', copy=False)

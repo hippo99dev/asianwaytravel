@@ -29,7 +29,7 @@
                     <group><field name="rate"/></group>
                     <group><field name="vat"/></group>
                 </group>
-                <group>
+                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}">
                     <field name="asian_spreadsheet_product_ids" nolabel="1" widget="one2many">
                         <tree editable="bottom">
                             <field name="type_line" invisible="1"/>
@@ -51,7 +51,7 @@
                     <label for="net_price" style="margin-left: 370px; width: 110px;"/>
                     <field name="net_price" nolabel="1"/>
                 </group>
-                <group>
+                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}">
                     <field name="asian_spreadsheet_team_option_ids" nolabel="1" widget="one2many">
                         <tree editable="bottom" create="0" delete="0">
                             <field name="asian_spreadsheet_option_id" invisible="1"/>
@@ -71,7 +71,7 @@
                         </tree>
                     </field>
                 </group>
-                <group>
+                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}">
                     <field name="asian_spreadsheet_net_option_ids" nolabel="1" widget="one2many">
                         <tree editable="bottom" create="0" delete="0">
                             <field name="asian_spreadsheet_option_id" invisible="1"/>
