@@ -22,7 +22,7 @@ class PurchaseOrder(models.Model):
         self.ensure_one()
         action = self.env.ref('asian_sale_purchase_payment.sale_order_payment__tour_report__act_window')
         action = action and action.read()[0]
-        action['domain'] = [('id', 'in', self.mapped('order_line.payment_line_ids.payment_id').ids)]
+        action['domain'] = [('id', 'in', self.order_id.payment_ids.ids)]
         return action
 
     def export_sale_order_guider(self):

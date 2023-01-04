@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="web_assets_backend_inherit" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/asian_quotation/static/src/css/style.css"/>
+            <script type="text/javascript" src="/asian_quotation/static/src/js/list_editable_renderer.js"/>
+        </xpath>
+    </template>
+</odoo>

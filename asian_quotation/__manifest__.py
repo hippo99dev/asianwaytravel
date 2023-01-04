@@ -5,6 +5,7 @@
     'depends': ['base', 'product', 'asia_contract'],
     'data': [
         'security/ir.model.access.csv',
+        'views/assets.xml',
         'views/asian_quotation_views.xml',
         # 'views/asian_spreadsheet_option_views.xml',
     ],
