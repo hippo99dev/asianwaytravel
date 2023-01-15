@@ -43,8 +43,8 @@ class AsianSpreadsheetNetOption(models.Model):
     def _compute_car_x(self):
         def calc_car_x(x):
             result = 0
-            by_type_line_value = getattr(by_type_line, f'car_{x}')
-            by_team_line_value = getattr(by_team_line, f'car_{x}')
+            by_type_line_value = getattr(by_type_line, f'car_{x}') * 1000
+            by_team_line_value = getattr(by_team_line, f'car_{x}') * 1000
             if by_team_line_value:
                 result = own_expenses + (general_expenses + transit_price * by_type_line_value) / by_team_line_value
 
@@ -53,14 +53,14 @@ class AsianSpreadsheetNetOption(models.Model):
         for rec in self:
             hotel_price = meal_price = ticket_price = show_price = transit_price = transport_price = guide_price = 0
             for line in rec.asian_spreadsheet_option_id.asian_spreadsheet_product_ids:
-                hotel_price += line.hotel_price
-                meal_price += line.meal_price
-                ticket_price += line.ticket_price
-                show_price += line.show_price
+                hotel_price += line.hotel_price * 1000
+                meal_price += line.meal_price * 1000
+                ticket_price += line.ticket_price * 1000
+                show_price += line.show_price * 1000
 
                 transit_price += line.transit_price
-                transport_price += line.transport_price
-                guide_price += line.guide_price
+                transport_price += line.transport_price * 1000
+                guide_price += line.guide_price * 1000
             own_expenses = hotel_price / 2 + meal_price + ticket_price + show_price
             general_expenses = transport_price + guide_price
 

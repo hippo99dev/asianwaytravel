@@ -35,3 +35,14 @@ class PurchaseOrder(models.Model):
             'target': 'new',
             'context': {'default_order_id': self.order_id.id, 'default_type': 'guider', 'active_id': self.order_id.id, 'active_ids': self.order_id.ids}
         }
+
+    def export_contract_guider(self):
+        self.ensure_one()
+        return {
+            'name': 'Hợp đồng HDV',
+            'view_mode': 'form',
+            'res_model': 'guider.contract.wizard',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': {'default_order_id': self.order_id.id}
+        }

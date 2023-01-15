@@ -2,7 +2,7 @@
 {
     'name': "Asian Quotation",
     'version': '0.1',
-    'depends': ['base', 'product', 'asia_contract'],
+    'depends': ['base', 'product', 'asia_sale', 'asia_contract'],
     'data': [
         'security/ir.model.access.csv',
         'views/assets.xml',

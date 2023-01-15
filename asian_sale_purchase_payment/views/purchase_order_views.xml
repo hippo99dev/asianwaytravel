@@ -17,6 +17,9 @@
                     <button name="export_sale_order_guider" type="object" icon="fa-pencil-square-o w-100">
                         <p class="w-100 text-center">In cho hướng dẫn viên</p>
                     </button>
+<!--                    <button name="export_contract_guider" type="object" icon="fa-pencil-square-o w-100">-->
+<!--                        <p class="w-100 text-center">Hợp đồng HDV</p>-->
+<!--                    </button>-->
                 </div>
             </xpath>
         </field>

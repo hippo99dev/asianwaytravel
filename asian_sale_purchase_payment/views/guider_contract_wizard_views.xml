@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <record id="guider_contract_wizard_form" model="ir.ui.view">-->
+<!--        <field name="name">guider.contract.wizard.form</field>-->
+<!--        <field name="model">guider.contract.wizard</field>-->
+<!--        <field name="inherit_id" ref="asia_sale.asia_guider_contract_wizard_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//footer" position="before">-->
+<!--                <br/>-->
+<!--                <field name="attachment_ids" widget="many2many_binary"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

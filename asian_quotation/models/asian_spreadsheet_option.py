@@ -6,7 +6,6 @@ class AsianSpreadsheetOption(models.Model):
     _description = 'Asian Spreadsheet Option'
 
     name = fields.Char(string='Option')
-    sequence = fields.Integer(string='Sequence', compute='_compute_sequence')
     profit = fields.Float(string='Lợi nhuận (%)', help='Điền vào % lợi nhuận. Eg: 25')
     car_4 = fields.Float(string='Xe 4 chỗ', compute='_compute_car_x')
     car_7 = fields.Float(string='Xe 7 chỗ', compute='_compute_car_x')
@@ -19,6 +18,7 @@ class AsianSpreadsheetOption(models.Model):
     car_45_4 = fields.Float(string='Xe 45 chỗ', compute='_compute_car_x')
     apply = fields.Boolean(string='Tính báo giá')
     asian_quotation_id = fields.Many2one(string='Asian Quotation', comodel_name='asian.quotation', ondelete='cascade')
+    asian_quotation_schedule_ids = fields.One2many(string='Asian Quotation Schedule', comodel_name='asian.quotation.schedule', inverse_name='asian_spreadsheet_option_id')
     asian_spreadsheet_product_ids = fields.One2many(string='Asian Spreadsheet Product', comodel_name='asian.spreadsheet.product', inverse_name='asian_spreadsheet_option_id')
     asian_spreadsheet_team_option_ids = fields.One2many(string='Asian Spreadsheet Team Option', comodel_name='asian.spreadsheet.team.option', inverse_name='asian_spreadsheet_option_id')
     asian_spreadsheet_net_option_ids = fields.One2many(string='Asian Spreadsheet Net Option', comodel_name='asian.spreadsheet.net.option', inverse_name='asian_spreadsheet_option_id')
@@ -60,100 +60,100 @@ class AsianSpreadsheetOption(models.Model):
             'asian_quotation_id': res.asian_quotation_id.id,
         })
 
-        for val in [
-            {
-                'date_number': '11Mar',
-                'travel_itinerary': 'Hanoi',
-                'hotel_price': 850000,
-                'meal_price': 0,
-                'ticket_price': 0,
-                'show_price': 35000,
-                'transit_price': 200,
-                'transport_price': 0,
-                'guide_price': 600000,
-                'asian_spreadsheet_option_id': res.id,
-                'asian_quotation_id': res.asian_quotation_id.id,
-            },
-            {
-                'date_number': '12Mar',
-                'travel_itinerary': 'Ninh Binh- Hanoi',
-                'hotel_price': 750000,
-                'meal_price': 200000,
-                'ticket_price': 310000,
-                'show_price': 0,
-                'transit_price': 320,
-                'transport_price': 60000,
-                'guide_price': 600000,
-                'asian_spreadsheet_option_id': res.id,
-                'asian_quotation_id': res.asian_quotation_id.id,
-            },
-            {
-                'date_number': '13Mar',
-                'travel_itinerary': 'Hanoi- Halong',
-                'hotel_price': 560000,
-                'meal_price': 0,
-                'ticket_price': 0,
-                'show_price': 0,
-                'transit_price': 250,
-                'transport_price': 200000,
-                'guide_price': 600000,
-                'asian_spreadsheet_option_id': res.id,
-                'asian_quotation_id': res.asian_quotation_id.id,
-            },
-            {
-                'date_number': '14Mar',
-                'travel_itinerary': 'Halong- Hanoi',
-                'hotel_price': 750000,
-                'meal_price': 0,
-                'ticket_price': 0,
-                'show_price': 0,
-                'transit_price': 250,
-                'transport_price': 0,
-                'guide_price': 600000,
-                'asian_spreadsheet_option_id': res.id,
-                'asian_quotation_id': res.asian_quotation_id.id,
-            },
-            {
-                'date_number': '15Mar',
-                'travel_itinerary': 'Hanoi- Sai gon',
-                'hotel_price': 700000,
-                'meal_price': 0,
-                'ticket_price': 0,
-                'show_price': 0,
-                'transit_price': 200,
-                'transport_price': 0,
-                'guide_price': 1200000,
-                'asian_spreadsheet_option_id': res.id,
-                'asian_quotation_id': res.asian_quotation_id.id,
-            },
-            {
-                'date_number': '16Mar',
-                'travel_itinerary': 'SAi gon tự do',
-                'hotel_price': 250000,
-                'meal_price': 0,
-                'ticket_price': 0,
-                'show_price': 0,
-                'transit_price': 0,
-                'transport_price': 0,
-                'guide_price': 0,
-                'asian_spreadsheet_option_id': res.id,
-                'asian_quotation_id': res.asian_quotation_id.id,
-            },
-            {
-                'date_number': '18Mar',
-                'travel_itinerary': 'Tiễn sân bay',
-                'hotel_price': 850000,
-                'meal_price': 0,
-                'ticket_price': 0,
-                'show_price': 0,
-                'transit_price': 100,
-                'transport_price': 0,
-                'guide_price': 600000,
-                'asian_spreadsheet_option_id': res.id,
-                'asian_quotation_id': res.asian_quotation_id.id,
-            },
-        ]:
-            self.env['asian.spreadsheet.product'].create(val)
+        # for val in [
+        #     {
+        #         'date_number': '11Mar',
+        #         'travel_itinerary': 'Hanoi',
+        #         'hotel_price': 850000,
+        #         'meal_price': 0,
+        #         'ticket_price': 0,
+        #         'show_price': 35000,
+        #         'transit_price': 200,
+        #         'transport_price': 0,
+        #         'guide_price': 600000,
+        #         'asian_spreadsheet_option_id': res.id,
+        #         'asian_quotation_id': res.asian_quotation_id.id,
+        #     },
+        #     {
+        #         'date_number': '12Mar',
+        #         'travel_itinerary': 'Ninh Binh- Hanoi',
+        #         'hotel_price': 750000,
+        #         'meal_price': 200000,
+        #         'ticket_price': 310000,
+        #         'show_price': 0,
+        #         'transit_price': 320,
+        #         'transport_price': 60000,
+        #         'guide_price': 600000,
+        #         'asian_spreadsheet_option_id': res.id,
+        #         'asian_quotation_id': res.asian_quotation_id.id,
+        #     },
+        #     {
+        #         'date_number': '13Mar',
+        #         'travel_itinerary': 'Hanoi- Halong',
+        #         'hotel_price': 560000,
+        #         'meal_price': 0,
+        #         'ticket_price': 0,
+        #         'show_price': 0,
+        #         'transit_price': 250,
+        #         'transport_price': 200000,
+        #         'guide_price': 600000,
+        #         'asian_spreadsheet_option_id': res.id,
+        #         'asian_quotation_id': res.asian_quotation_id.id,
+        #     },
+        #     {
+        #         'date_number': '14Mar',
+        #         'travel_itinerary': 'Halong- Hanoi',
+        #         'hotel_price': 750000,
+        #         'meal_price': 0,
+        #         'ticket_price': 0,
+        #         'show_price': 0,
+        #         'transit_price': 250,
+        #         'transport_price': 0,
+        #         'guide_price': 600000,
+        #         'asian_spreadsheet_option_id': res.id,
+        #         'asian_quotation_id': res.asian_quotation_id.id,
+        #     },
+        #     {
+        #         'date_number': '15Mar',
+        #         'travel_itinerary': 'Hanoi- Sai gon',
+        #         'hotel_price': 700000,
+        #         'meal_price': 0,
+        #         'ticket_price': 0,
+        #         'show_price': 0,
+        #         'transit_price': 200,
+        #         'transport_price': 0,
+        #         'guide_price': 1200000,
+        #         'asian_spreadsheet_option_id': res.id,
+        #         'asian_quotation_id': res.asian_quotation_id.id,
+        #     },
+        #     {
+        #         'date_number': '16Mar',
+        #         'travel_itinerary': 'SAi gon tự do',
+        #         'hotel_price': 250000,
+        #         'meal_price': 0,
+        #         'ticket_price': 0,
+        #         'show_price': 0,
+        #         'transit_price': 0,
+        #         'transport_price': 0,
+        #         'guide_price': 0,
+        #         'asian_spreadsheet_option_id': res.id,
+        #         'asian_quotation_id': res.asian_quotation_id.id,
+        #     },
+        #     {
+        #         'date_number': '18Mar',
+        #         'travel_itinerary': 'Tiễn sân bay',
+        #         'hotel_price': 850000,
+        #         'meal_price': 0,
+        #         'ticket_price': 0,
+        #         'show_price': 0,
+        #         'transit_price': 100,
+        #         'transport_price': 0,
+        #         'guide_price': 600000,
+        #         'asian_spreadsheet_option_id': res.id,
+        #         'asian_quotation_id': res.asian_quotation_id.id,
+        #     },
+        # ]:
+        #     self.env['asian.spreadsheet.product'].create(val)
 
         return res
 
@@ -179,10 +179,3 @@ class AsianSpreadsheetOption(models.Model):
             rec.car_45_2 = calc_car_x('45_2')
             rec.car_45_3 = calc_car_x('45_3')
             rec.car_45_4 = calc_car_x('45_4')
-
-    @api.depends('asian_quotation_id.asian_spreadsheet_option_ids')
-    def _compute_sequence(self):
-        for rec in self:
-            x = rec.asian_quotation_id.asian_spreadsheet_option_ids
-            x -= rec
-            rec.sequence = len(x) - 1

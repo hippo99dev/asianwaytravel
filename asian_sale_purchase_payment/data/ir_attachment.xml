@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="contract_guider" model="ir.attachment">
+        <field name="datas_fname">Hợp đồng HDV</field>
+        <field name="name">Hợp đồng HDV</field>
+        <field name="datas" type="base64" file="asian_sale_purchase_payment/static/src/pdf/xxx.pdf"/>
+    </record>
+</odoo>

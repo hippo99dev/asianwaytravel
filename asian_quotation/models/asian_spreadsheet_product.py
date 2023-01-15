@@ -41,4 +41,4 @@ class AsianSpreadsheetProduct(models.Model):
         for rec in self:
             suppliers = self.env['product.supplierinfo'].search(expression.AND([[('product_id', '=', rec.hotel_id.id)], domain]), order='price')
             if suppliers:
-                rec.hotel_price = suppliers[:1].price
+                rec.hotel_price = suppliers[:1].price / 1000

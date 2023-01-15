@@ -94,6 +94,66 @@
             <xpath expr="//header" position="inside">
                 <field name="is_guider" invisible="1"/>
             </xpath>
+            <xpath expr="//notebook/page[1]" position="replace">
+                <page string="Chi tiết dịch vụ">
+                    <group string="Khách sạn">
+                        <field name="hotel_amount"/>
+                    </group>
+                    <group>
+                        <field name="hotel_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_hotel_tree'}"/>
+                    </group>
+                    <group string="Nhà hàng">
+                        <field name="meal_amount"/>
+                    </group>
+                    <group>
+                        <field name="meal_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_general_tree'}"/>
+                    </group>
+                    <group string="Vé thắng cảnh">
+                        <field name="ticket_amount"/>
+                    </group>
+                    <group>
+                        <field name="ticket_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_general_tree'}"/>
+                    </group>
+                    <group string="Xe vận chuyển">
+                        <field name="transprort_amount"/>
+                    </group>
+                    <group>
+                        <field name="transport_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_general_tree'}"/>
+                    </group>
+                    <group string="Di chuyển">
+                        <field name="plane_amount"/>
+                    </group>
+                    <group>
+                        <field name="plane_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_general_tree'}"/>
+                    </group>
+                    <group string="Hướng dẫn viên">
+                        <field name="guider_amount"/>
+                    </group>
+                    <group>
+                        <field name="guider_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_general_tree'}"/>
+                    </group>
+                    <group string="Dịch vụ khác">
+                        <field name="others_amount"/>
+                    </group>
+                    <group>
+                        <field name="others_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_general_tree'}"/>
+                    </group>
+                    <group string="Landtour">
+                        <field name="landtour_amount"/>
+                    </group>
+                    <group>
+                        <field name="landtour_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_general_tree'}"/>
+                    </group>
+                    <group string="Dự toán con">
+                        <field name="payment_child_ids" nolabel="1" options="{'no_open': True}" mode="tree">
+                            <tree>
+                                <field name="name"/>
+                                <field name="total_paid"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
         </field>
     </record>
 

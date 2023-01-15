@@ -551,6 +551,28 @@
                     </page>
                 </notebook>
             </xpath>
+            <xpath expr="//field[@name='sale_order_id']" position="replace">
+                <field name="show_brief_itinerary" widget="boolean_toggle"/>
+                <group string="Brief itinerary">
+                    <field name="sale_order_id" context="{'default_date_start_tour': date_start}" nolabel="1" attrs="{'invisible': [('show_brief_itinerary', '=', False)]}">
+                        <tree editable="bottom">
+                            <field name="sequence" string="STT"/>
+                            <field name="sale_order_template_id" string="Tour program" required="1"/>
+                            <field name="date_start_tour" required="1" placeholder="dd/mm/yy"/>
+                            <field name="date_end_tour" required="1"/>
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_schedule_ids']/tree/field[@name='schedule_act']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[3]" position="before">
+                <field name="show_schedule" widget="boolean_toggle"/>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_schedule_ids']" position="attributes">
+                <attribute name="attrs">{'invisible': [('show_schedule', '=', False)]}</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
