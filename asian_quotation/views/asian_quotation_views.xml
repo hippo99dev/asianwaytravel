@@ -17,10 +17,10 @@
         <field name="name">asian.quotation.form_view</field>
         <field name="model">asian.quotation</field>
         <field name="arch" type="xml">
-            <header>
-                <button name="action_create_sale_order" type="object" string="Tạo Hồ sơ tour"/>
-            </header>
             <form>
+                <header>
+                    <button name="action_create_sale_order" type="object" string="Tạo Hồ sơ tour"/>
+                </header>
                 <field name="sale_order_count" invisible="1"/>
                 <field name="applied_asian_spreadsheet_option_id" invisible="1"/>
                 <div class="oe_button_box" name="button_box" attrs="{'invisible': [('sale_order_count', '&lt;', 1)]}">
