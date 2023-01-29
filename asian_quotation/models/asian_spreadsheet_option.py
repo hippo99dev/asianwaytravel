@@ -6,7 +6,8 @@ class AsianSpreadsheetOption(models.Model):
     _description = 'Asian Spreadsheet Option'
 
     name = fields.Char(string='Option')
-    profit = fields.Float(string='Lợi nhuận (%)', help='Điền vào % lợi nhuận. Eg: 25')
+    profit = fields.Float(string='Lợi nhuận', help='Điền vào lợi nhuận. Eg: 100.000')
+    percent_profit = fields.Float(string='Lợi nhuận (%)', help='Điền vào % lợi nhuận. Eg: 25')
     car_4 = fields.Float(string='Xe 4 chỗ', compute='_compute_car_x')
     car_7 = fields.Float(string='Xe 7 chỗ', compute='_compute_car_x')
     car_16 = fields.Float(string='Xe 16 chỗ', compute='_compute_car_x')
@@ -22,6 +23,7 @@ class AsianSpreadsheetOption(models.Model):
     asian_spreadsheet_product_ids = fields.One2many(string='Asian Spreadsheet Product', comodel_name='asian.spreadsheet.product', inverse_name='asian_spreadsheet_option_id')
     asian_spreadsheet_team_option_ids = fields.One2many(string='Asian Spreadsheet Team Option', comodel_name='asian.spreadsheet.team.option', inverse_name='asian_spreadsheet_option_id')
     asian_spreadsheet_net_option_ids = fields.One2many(string='Asian Spreadsheet Net Option', comodel_name='asian.spreadsheet.net.option', inverse_name='asian_spreadsheet_option_id')
+    template_option_id = fields.Many2one(string='Template', comodel_name='asian.spreadsheet.option', domain="[('asian_quotation_id', '=', asian_quotation_id), ('id', '!=', id)]")
 
     @api.onchange('apply')
     def onchange_apply(self):
@@ -37,6 +39,15 @@ class AsianSpreadsheetOption(models.Model):
             'type_line': 'by_type',
             'asian_spreadsheet_option_id': res.id,
             'asian_quotation_id': res.asian_quotation_id.id,
+            'car_4': 6,
+            'car_7': 6.5,
+            'car_16': 7,
+            'car_29': 10.5,
+            'car_35': 11,
+            'car_45_1': 14,
+            'car_45_2': 14,
+            'car_45_3': 14,
+            'car_45_4': 14,
         })
         by_team = self.env['asian.spreadsheet.team.option'].create({
             'name': 'Nhóm khách',
@@ -44,6 +55,15 @@ class AsianSpreadsheetOption(models.Model):
             'type_line': 'by_team',
             'asian_spreadsheet_option_id': res.id,
             'asian_quotation_id': res.asian_quotation_id.id,
+            'car_4': 2,
+            'car_7': 3,
+            'car_16': 6,
+            'car_29': 10,
+            'car_35': 15,
+            'car_45_1': 20,
+            'car_45_2': 25,
+            'car_45_3': 30,
+            'car_45_4': 35,
         })
         net = self.env['asian.spreadsheet.net.option'].create({
             'name': 'Giá NET/khách',
@@ -164,10 +184,10 @@ class AsianSpreadsheetOption(models.Model):
     def _compute_car_x(self):
         def calc_car_x(x):
             net_usd_line_value = getattr(net_usd_line, f'car_{x}')
-            return net_usd_line_value * (100 + rec.profit) / 100 + net_line.profit
+            return net_usd_line_value * (100 + rec.percent_profit) / 100 + rec.profit
 
         for rec in self:
-            net_line = rec.asian_quotation_id.asian_spreadsheet_net_option_ids.filtered(lambda o: o.type_line == 'net')
+            # net_line = rec.asian_quotation_id.asian_spreadsheet_net_option_ids.filtered(lambda o: o.type_line == 'net')
             net_usd_line = rec.asian_quotation_id.asian_spreadsheet_net_option_ids.filtered(lambda o: o.type_line == 'net_usd')
 
             rec.car_4 = calc_car_x('4')
@@ -179,3 +199,94 @@ class AsianSpreadsheetOption(models.Model):
             rec.car_45_2 = calc_car_x('45_2')
             rec.car_45_3 = calc_car_x('45_3')
             rec.car_45_4 = calc_car_x('45_4')
+
+    def action_copy_option(self):
+        asian_quotation_schedule_ids = [(5, 0, 0)]
+        asian_spreadsheet_product_ids = [(5, 0, 0)]
+        asian_spreadsheet_team_option_ids = [(5, 0, 0)]
+        asian_spreadsheet_net_option_ids = [(5, 0, 0)]
+        for line in self.template_option_id.asian_quotation_schedule_ids:
+            asian_quotation_schedule_ids.append(
+                (0, 0, {
+                    'sequence': line.sequence,
+                    'schedule_date': line.schedule_date,
+                    'schedule_act': line.schedule_act,
+                    'note': line.note,
+                    'customer_market': line.customer_market,
+                    'validate_season': line.validate_season,
+                    'meal_supplied': line.meal_supplied,
+                    'schedule_date_date': line.schedule_date_date,
+                    'weekday': line.weekday,
+                    'meal_ids': [(6, 0, line.meal_ids.ids)],
+                    'asian_spreadsheet_option_id': self.id,
+                })
+            )
+
+        for line in self.template_option_id.asian_spreadsheet_product_ids:
+            asian_spreadsheet_product_ids.append(
+                (0, 0, {
+                    'date_number': line.date_number,
+                    'travel_itinerary': line.travel_itinerary,
+                    'hotel_price': line.hotel_price,
+                    'hotel_id': line.hotel_id.id,
+                    'meal_price': line.meal_price,
+                    'ticket_price': line.ticket_price,
+                    'show_price': line.show_price,
+                    'transit_price': line.transit_price,
+                    'transport_price': line.transport_price,
+                    'guide_price': line.guide_price,
+                    'sequence': line.sequence,
+                    'type_line': line.type_line,
+                    'asian_quotation_id': line.asian_quotation_id.id,
+                    'asian_spreadsheet_option_id': self.id,
+                })
+            )
+
+        for line in self.template_option_id.asian_spreadsheet_team_option_ids:
+            asian_spreadsheet_team_option_ids.append(
+                (0, 0, {
+                    'name': line.name,
+                    'profit': line.profit,
+                    'car_4': line.car_4,
+                    'car_7': line.car_7,
+                    'car_16': line.car_16,
+                    'car_29': line.car_29,
+                    'car_35': line.car_35,
+                    'car_45_1': line.car_45_1,
+                    'car_45_2': line.car_45_2,
+                    'car_45_3': line.car_45_3,
+                    'car_45_4': line.car_45_4,
+                    'apply': line.apply,
+                    'type_line': line.type_line,
+                    'asian_quotation_id': line.asian_quotation_id.id,
+                    'asian_spreadsheet_option_id': self.id,
+                })
+            )
+
+        for line in self.template_option_id.asian_spreadsheet_net_option_ids:
+            asian_spreadsheet_net_option_ids.append(
+                (0, 0, {
+                    'name': line.name,
+                    'profit': line.profit,
+                    'car_4': line.car_4,
+                    'car_7': line.car_7,
+                    'car_16': line.car_16,
+                    'car_29': line.car_29,
+                    'car_35': line.car_35,
+                    'car_45_1': line.car_45_1,
+                    'car_45_2': line.car_45_2,
+                    'car_45_3': line.car_45_3,
+                    'car_45_4': line.car_45_4,
+                    'apply': line.apply,
+                    'type_line': line.type_line,
+                    'asian_quotation_id': line.asian_quotation_id.id,
+                    'asian_spreadsheet_option_id': self.id,
+                })
+            )
+        self.write({
+            'asian_quotation_schedule_ids': asian_quotation_schedule_ids,
+            'asian_spreadsheet_product_ids': asian_spreadsheet_product_ids,
+            'asian_spreadsheet_team_option_ids': asian_spreadsheet_team_option_ids,
+            'asian_spreadsheet_net_option_ids': asian_spreadsheet_net_option_ids,
+        })
+

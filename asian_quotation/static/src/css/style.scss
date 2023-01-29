@@ -1,0 +1,25 @@
+.even-row-color {
+    background-color: rgba(166, 171, 183, 0.4) !important;
+}
+
+.asian_quotation {
+  width: 100%;
+  font-weight: bold;
+
+  tr {
+    height: 35px;
+
+    td {
+      border: 1px solid;
+      text-align: center;
+
+      input {
+        border: 0px solid;
+        width: 100%;
+        height: 35px;
+        margin: 0px !important;
+      }
+    }
+  }
+
+}

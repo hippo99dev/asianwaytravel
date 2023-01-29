@@ -18,7 +18,7 @@ class AsianSpreadsheetProduct(models.Model):
     ticket_price = fields.Float(string='Vé thắng cảnh')
     show_price = fields.Float(string='Show')
     transit_price = fields.Float(string='Xe vận chuyển (Km)', help='Điền vào Km. Eg: 10')
-    transport_price = fields.Float(string='Di chuyển')
+    transport_price = fields.Float(string='Group fee')
     guide_price = fields.Float(string='Hướng dẫn viên')
 
     sequence = fields.Integer(string='Sequence', default=10)

@@ -41,7 +41,7 @@
                     <group><field name="rate"/></group>
                     <group><field name="vat"/></group>
                 </group>
-                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}" string="Brief itinarary">
+                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}" string="Tour Program">
                     <field name="asian_quotation_schedule_ids" nolabel="1" widget="one2many">
                         <tree editable="bottom">
                             <field name="sequence" string="STT"/>
@@ -49,7 +49,7 @@
                             <field name="schedule_date_date"/>
                             <field name="weekday"/>
                             <field name="note"/>
-<!--                            <field name="schedule_act"/>-->
+                            <field name="schedule_act" string="Itinerary detail"/>
                             <field name="customer_market"/>
                             <field name="validate_season"/>
                             <field name="meal_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
@@ -58,7 +58,7 @@
                         </tree>
                     </field>
                 </group>
-                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}" string="Dịch vụ">
+                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}" string="Bảng tính">
                     <field name="asian_spreadsheet_product_ids" nolabel="1" widget="one2many">
                         <tree editable="bottom">
                             <field name="type_line" invisible="1"/>
@@ -80,13 +80,13 @@
                     <label for="net_price" style="margin-left: 370px; width: 110px;"/>
                     <field name="net_price" nolabel="1"/>
                 </group>
-                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}">
+                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}" string="Giá xe và nhóm khách">
                     <field name="asian_spreadsheet_team_option_ids" nolabel="1" widget="one2many">
                         <tree editable="bottom" create="0" delete="0">
                             <field name="asian_spreadsheet_option_id" invisible="1"/>
                             <field name="type_line" invisible="1"/>
                             <field name="name" readonly="1"/>
-                            <field name="profit" readonly="1"/>
+                            <field name="profit" readonly="1" invisible="1"/>
                             <field name="car_4"/>
                             <field name="car_7"/>
                             <field name="car_16"/>
@@ -95,18 +95,18 @@
                             <field name="car_45_1"/>
                             <field name="car_45_2"/>
                             <field name="car_45_3"/>
-                            <field name="car_45_4"/>
-                            <field name="apply" readonly="1"/>
+                            <field name="car_45_4" invisible="1"/>
+                            <field name="apply" readonly="1" invisible="1"/>
                         </tree>
                     </field>
                 </group>
-                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}">
+                <group attrs="{'invisible': [('applied_asian_spreadsheet_option_id', '=', False)]}" string="Giá NET">
                     <field name="asian_spreadsheet_net_option_ids" nolabel="1" widget="one2many">
                         <tree editable="bottom" create="0" delete="0">
                             <field name="asian_spreadsheet_option_id" invisible="1"/>
                             <field name="type_line" invisible="1"/>
                             <field name="name" readonly="1"/>
-                            <field name="profit" attrs="{'readonly': [('type_line', '=', 'net_usd')]}"/>
+                            <field name="profit" attrs="{'readonly': [('type_line', '=', 'net_usd')]}" invisible="1"/>
                             <field name="car_4"/>
                             <field name="car_7"/>
                             <field name="car_16"/>
@@ -115,16 +115,17 @@
                             <field name="car_45_1"/>
                             <field name="car_45_2"/>
                             <field name="car_45_3"/>
-                            <field name="car_45_4"/>
-                            <field name="apply" readonly="1"/>
+                            <field name="car_45_4" invisible="1"/>
+                            <field name="apply" readonly="1" invisible="1"/>
                         </tree>
                     </field>
                 </group>
                 <group>
-                    <field name="asian_spreadsheet_option_ids" nolabel="1">
+                    <field name="asian_spreadsheet_option_ids" nolabel="1" string="Báo giá">
                         <tree editable="bottom" even-row-color="1==1">
                             <field name="name"/>
                             <field name="profit"/>
+                            <field name="percent_profit"/>
                             <field name="car_4"/>
                             <field name="car_7"/>
                             <field name="car_16"/>
@@ -133,12 +134,15 @@
                             <field name="car_45_1"/>
                             <field name="car_45_2"/>
                             <field name="car_45_3"/>
-                            <field name="car_45_4"/>
+                            <field name="car_45_4" invisible="1"/>
                             <field name="apply"/>
+                            <field name="template_option_id"/>
+                            <button name="action_copy_option" type="object" string="Copy từ template" attrs="{'invisible': [('template_option_id', '=', False)]}" class="oe_highlight"/>
                             <field name="asian_spreadsheet_team_option_ids" invisible="1" widget="one2many_list"/>
                             <field name="asian_spreadsheet_net_option_ids" invisible="1" widget="one2many_list"/>
                             <field name="asian_spreadsheet_product_ids" invisible="1" widget="one2many_list"/>
                             <field name="asian_quotation_schedule_ids" invisible="1" widget="one2many_list"/>
+                            <field name="asian_quotation_id" invisible="1"/>
                         </tree>
                     </field>
                 </group>
