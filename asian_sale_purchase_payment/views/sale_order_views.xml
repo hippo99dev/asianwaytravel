@@ -570,8 +570,17 @@
             <xpath expr="//field[@name='sale_order_schedule_ids']/tree/field[@name='schedule_act']" position="attributes">
                 <attribute name="string">Program Detail</attribute>
             </xpath>
+            <xpath expr="//field[@name='sale_order_schedule_ids']/tree/field[@name='customer_market']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_schedule_ids']/tree/field[@name='validate_season']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
             <xpath expr="//group[3]" position="before">
                 <field name="show_schedule" widget="boolean_toggle"/>
+            </xpath>
+            <xpath expr="//group[3]" position="attributes">
+                <attribute name="string">Tour program</attribute>
             </xpath>
             <xpath expr="//field[@name='sale_order_schedule_ids']" position="attributes">
                 <attribute name="attrs">{'invisible': [('show_schedule', '=', False)]}</attribute>

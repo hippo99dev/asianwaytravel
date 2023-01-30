@@ -73,6 +73,7 @@
                             <field name="transit_price" attrs="{'readonly': [('type_line', '!=', False)]}" sum="Sum"/>
                             <field name="transport_price" attrs="{'readonly': [('type_line', '!=', False)]}" sum="Sum"/>
                             <field name="guide_price" attrs="{'readonly': [('type_line', '!=', False)]}" sum="Sum"/>
+                            <field name="note"/>
                         </tree>
                     </field>
                 </group>
@@ -120,8 +121,8 @@
                         </tree>
                     </field>
                 </group>
-                <group>
-                    <field name="asian_spreadsheet_option_ids" nolabel="1" string="Báo giá">
+                <group string="Giá bán">
+                    <field name="asian_spreadsheet_option_ids" nolabel="1">
                         <tree editable="bottom" even-row-color="1==1">
                             <field name="name"/>
                             <field name="profit"/>

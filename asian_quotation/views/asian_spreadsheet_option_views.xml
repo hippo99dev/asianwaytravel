@@ -80,7 +80,7 @@
 
     <record id="asia_spreadsheet_option_module_menu" model="ir.ui.menu">
         <field name="name">Option</field>
-        <field name="parent_id" ref="asia_quotation_module_menu"/>
+        <field name="parent_id" ref="asian_quotation_module_menu"/>
         <field name="action" ref="asia_spreadsheet_option__act_window"/>
     </record>
 </odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="default_vehicle_price__tree_view" model="ir.ui.view">
+        <field name="name">default.vehicle.price.tree_view</field>
+        <field name="model">default.vehicle.price</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="default_vehicle_price__act_window" model="ir.actions.act_window">
+        <field name="name">Giá xe mặc định</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">default.vehicle.price</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="default_vehicle_price_module_menu" model="ir.ui.menu">
+        <field name="name">Giá xe mặc định</field>
+        <field name="parent_id" ref="asian_quotation_module_menu"/>
+        <field name="action" ref="default_vehicle_price__act_window"/>
+    </record>
+</odoo>

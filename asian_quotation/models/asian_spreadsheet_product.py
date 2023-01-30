@@ -8,18 +8,19 @@ class AsianSpreadsheetProduct(models.Model):
     _rec_name = 'date_number'
     _order = 'sequence'
 
-    date_number = fields.Char('Số ngày')
-    travel_itinerary = fields.Text('Lịch trình')
+    date_number = fields.Char('Date')
+    travel_itinerary = fields.Text('Itinarary')
 
-    hotel_price = fields.Float(string='Giá khách sạn')
+    hotel_price = fields.Float(string='Hotel Price')
     # hotel_price = fields.Float(string='Giá khách sạn', compute='_compute_hotel_price', store=True)
-    hotel_id = fields.Many2one(string='Tên khách sạn', comodel_name='product.product', domain=[('product_types', '=', 'hotel')])
-    meal_price = fields.Float(string='Nhà hàng')
-    ticket_price = fields.Float(string='Vé thắng cảnh')
-    show_price = fields.Float(string='Show')
-    transit_price = fields.Float(string='Xe vận chuyển (Km)', help='Điền vào Km. Eg: 10')
+    hotel_id = fields.Many2one(string='Hotel', comodel_name='product.product', domain=[('product_types', '=', 'hotel')])
+    meal_price = fields.Float(string='Restaurant')
+    ticket_price = fields.Float(string='Entrance fee')
+    show_price = fields.Float(string='Service + Show')
+    transit_price = fields.Float(string='Transport (Km)', help='Điền vào Km. Eg: 10')
     transport_price = fields.Float(string='Group fee')
-    guide_price = fields.Float(string='Hướng dẫn viên')
+    guide_price = fields.Float(string='Guide')
+    note = fields.Float(string='Note')
 
     sequence = fields.Integer(string='Sequence', default=10)
     type_line = fields.Selection(string='Loại dòng', selection=[('formula', 'Công thức'), ('net', 'Giá Net')], readonly=True)

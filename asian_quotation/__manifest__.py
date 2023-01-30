@@ -6,7 +6,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/assets.xml',
+        'data/default_vehicle_price.xml',
         'views/asian_quotation_views.xml',
+        'views/default_vehicle_price.xml',
         # 'views/asian_spreadsheet_option_views.xml',
     ],
     'auto_install': False,

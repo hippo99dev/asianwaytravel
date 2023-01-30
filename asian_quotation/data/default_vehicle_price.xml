@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="car_4" model="default.vehicle.price">
+        <field name="name">Xe 4 chỗ</field>
+        <field name="price">6</field>
+    </record>
+    <record id="car_7" model="default.vehicle.price">
+        <field name="name">Xe 7 chỗ</field>
+        <field name="price">6.5</field>
+    </record>
+    <record id="car_16" model="default.vehicle.price">
+        <field name="name">Xe 16 chỗ</field>
+        <field name="price">7</field>
+    </record>
+    <record id="car_29" model="default.vehicle.price">
+        <field name="name">Xe 29 chỗ</field>
+        <field name="price">10.5</field>
+    </record>
+    <record id="car_35" model="default.vehicle.price">
+        <field name="name">Xe 35 chỗ</field>
+        <field name="price">11</field>
+    </record>
+    <record id="car_45_1" model="default.vehicle.price">
+        <field name="name">Xe 45 chỗ</field>
+        <field name="price">14</field>
+    </record>
+    <record id="car_45_2" model="default.vehicle.price">
+        <field name="name">Xe 45 chỗ</field>
+        <field name="price">14</field>
+    </record>
+    <record id="car_45_3" model="default.vehicle.price">
+        <field name="name">Xe 45 chỗ</field>
+        <field name="price">14</field>
+    </record>
+    <record id="car_45_4" model="default.vehicle.price">
+        <field name="name">Xe 45 chỗ</field>
+        <field name="price">14</field>
+    </record>
+</odoo>

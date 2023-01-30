@@ -5,7 +5,7 @@ class AsianSpreadsheetNetOption(models.Model):
     _name = 'asian.spreadsheet.net.option'
     _description = 'Asian Spreadsheet Net Option'
 
-    name = fields.Char(string='Loại giá')
+    name = fields.Char(string='Giá tiền')
     profit = fields.Float(string='Lợi nhuận')
     car_4 = fields.Float(string='2 khách', compute='_compute_car_x')
     car_7 = fields.Float(string='3 khách', compute='_compute_car_x')
