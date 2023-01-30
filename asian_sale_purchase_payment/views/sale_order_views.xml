@@ -564,8 +564,11 @@
                     </field>
                 </group>
             </xpath>
+            <xpath expr="//field[@name='sale_order_schedule_ids']/tree/field[@name='note']" position="attributes">
+                <attribute name="string">Itinerary</attribute>
+            </xpath>
             <xpath expr="//field[@name='sale_order_schedule_ids']/tree/field[@name='schedule_act']" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <attribute name="string">Program Detail</attribute>
             </xpath>
             <xpath expr="//group[3]" position="before">
                 <field name="show_schedule" widget="boolean_toggle"/>
