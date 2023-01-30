@@ -50,8 +50,8 @@
                             <field name="weekday"/>
                             <field name="note"/>
                             <field name="schedule_act"/>
-                            <field name="customer_market"/>
-                            <field name="validate_season"/>
+                            <field name="customer_market" invisible="1"/>
+                            <field name="validate_season" invisible="1"/>
                             <field name="meal_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="meal_supplied" invisible="1"/>
                             <field name="template_id" groups="base.group_no_one"/>
