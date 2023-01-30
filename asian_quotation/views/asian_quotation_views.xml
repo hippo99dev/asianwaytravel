@@ -49,7 +49,7 @@
                             <field name="schedule_date_date"/>
                             <field name="weekday"/>
                             <field name="note"/>
-                            <field name="schedule_act" string="Itinerary detail"/>
+                            <field name="schedule_act"/>
                             <field name="customer_market"/>
                             <field name="validate_season"/>
                             <field name="meal_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
