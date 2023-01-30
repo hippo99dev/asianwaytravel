@@ -8,8 +8,8 @@ class AsianQuotationSchedule(models.Model):
 
     sequence = fields.Integer(string='Sequence', default=0)
     schedule_date = fields.Integer(string='Ngày')
-    schedule_act = fields.Text(string='Ghi chú')
-    note = fields.Text(string='Tóm tắt')
+    schedule_act = fields.Text(string='Program Detail')
+    note = fields.Text(string='Itinerary')
     customer_market = fields.Char(string='Thị trường khách')
     validate_season = fields.Selection(string="Thời gian hiệu lực", selection=[('peak_season', 'Mùa cao điểm'), ('low_season', 'Mùa thấp điểm')])
     meal_supplied = fields.Char(string='Bữa ăn')
