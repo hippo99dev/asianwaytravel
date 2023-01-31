@@ -20,7 +20,7 @@ class AsianSpreadsheetProduct(models.Model):
     transit_price = fields.Float(string='Transport (Km)', help='Điền vào Km. Eg: 10')
     transport_price = fields.Float(string='Group fee')
     guide_price = fields.Float(string='Guide')
-    note = fields.Float(string='Note')
+    note = fields.Text(string='Note')
 
     sequence = fields.Integer(string='Sequence', default=10)
     type_line = fields.Selection(string='Loại dòng', selection=[('formula', 'Công thức'), ('net', 'Giá Net')], readonly=True)
