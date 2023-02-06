@@ -51,6 +51,9 @@
             <xpath expr="//field[@name='note']" position="attributes">
                 <attribute name="attrs">{'column_invisible': [('parent.is_guider', '=', True)]}</attribute>
             </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">1</attribute>
+            </xpath>
         </field>
     </record>
 

@@ -20,3 +20,9 @@ class AsianSpreadsheetTeamOption(models.Model):
     type_line = fields.Selection(string='Type Line', selection=[('by_type', 'Giá theo loại xe/KM'), ('by_team', 'Nhóm khách')])
     asian_spreadsheet_option_id = fields.Many2one(string='Asian Spreadsheet Option', comodel_name='asian.spreadsheet.option')
     asian_quotation_id = fields.Many2one(string='Asian Quotation', comodel_name='asian.quotation')
+
+    @api.model
+    def create(self, values):
+        res = super(AsianSpreadsheetTeamOption, self).create(values)
+
+        return res

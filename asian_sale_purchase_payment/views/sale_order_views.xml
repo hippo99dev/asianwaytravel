@@ -585,6 +585,9 @@
             <xpath expr="//field[@name='sale_order_schedule_ids']" position="attributes">
                 <attribute name="attrs">{'invisible': [('show_schedule', '=', False)]}</attribute>
             </xpath>
+            <xpath expr="//page[10]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

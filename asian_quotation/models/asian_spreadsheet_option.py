@@ -23,38 +23,75 @@ class AsianSpreadsheetOption(models.Model):
     asian_spreadsheet_product_ids = fields.One2many(string='Asian Spreadsheet Product', comodel_name='asian.spreadsheet.product', inverse_name='asian_spreadsheet_option_id')
     asian_spreadsheet_team_option_ids = fields.One2many(string='Asian Spreadsheet Team Option', comodel_name='asian.spreadsheet.team.option', inverse_name='asian_spreadsheet_option_id')
     asian_spreadsheet_net_option_ids = fields.One2many(string='Asian Spreadsheet Net Option', comodel_name='asian.spreadsheet.net.option', inverse_name='asian_spreadsheet_option_id')
-    template_option_id = fields.Many2one(string='Template', comodel_name='asian.spreadsheet.option', domain="[('asian_quotation_id', '=', asian_quotation_id), ('id', '!=', id)]")
+    template_option_id = fields.Many2one(string='Template Option', comodel_name='asian.spreadsheet.option', domain="[('asian_quotation_id', '=', asian_quotation_id), ('id', '!=', id)]")
 
     @api.onchange('apply')
     def onchange_apply(self):
         if len(self.asian_quotation_id.asian_spreadsheet_option_ids.filtered(lambda o: o.apply)) > 2:
             raise exceptions.ValidationError("Không thể tính báo giá nhiều dòng!")
 
-    @api.model
-    def create(self, values):
-        res = super(AsianSpreadsheetOption, self).create(values)
+    def create_quotation_schedule(self):
+        self.ensure_one()
+        for line in self.asian_quotation_id.asian_quotation_schedule_ids:
+            self.env['asian.quotation.schedule'].create({
+                'sequence': line.sequence,
+                'schedule_date': line.schedule_date,
+                'schedule_act': line.schedule_act,
+                'note': line.note,
+                'customer_market': line.customer_market,
+                'validate_season': line.validate_season,
+                'meal_supplied': line.meal_supplied,
+                'schedule_date_date': line.schedule_date_date,
+                'weekday': line.weekday,
+                'meal_ids': [(6, 0, line.meal_ids.ids)],
+                'template_id': line.template_id,
+                'asian_spreadsheet_option_id': self.id,
+                'asian_quotation_id': self.asian_quotation_id.id,
+            })
+
+    def create_spreadsheet_product(self):
+        self.ensure_one()
+        for line in self.asian_quotation_id.asian_spreadsheet_product_ids:
+            self.env['asian.spreadsheet.product'].create({
+                'date_number': line.date_number,
+                'travel_itinerary': line.travel_itinerary,
+                'hotel_price': line.hotel_price,
+                'meal_price': line.meal_price,
+                'ticket_price': line.ticket_price,
+                'show_price': line.show_price,
+                'transit_price': line.transit_price,
+                'transport_price': line.transport_price,
+                'guide_price': line.guide_price,
+                'asian_spreadsheet_option_id': self.id,
+                'asian_quotation_id': self.asian_quotation_id.id,
+            })
+
+    def create_team_option(self):
+        self.ensure_one()
+
         by_type = self.env['asian.spreadsheet.team.option'].create({
             'name': 'Giá theo loại xe/KM',
             'apply': True,
             'type_line': 'by_type',
-            'asian_spreadsheet_option_id': res.id,
-            'asian_quotation_id': res.asian_quotation_id.id,
-            'car_4': self.env.ref('asian_quotation.car_4').price,
-            'car_7': self.env.ref('asian_quotation.car_7').price,
-            'car_16': self.env.ref('asian_quotation.car_16').price,
-            'car_29': self.env.ref('asian_quotation.car_29').price,
-            'car_35': self.env.ref('asian_quotation.car_35').price,
-            'car_45_1': self.env.ref('asian_quotation.car_45_1').price,
-            'car_45_2': self.env.ref('asian_quotation.car_45_2').price,
-            'car_45_3': self.env.ref('asian_quotation.car_45_3').price,
-            'car_45_4': self.env.ref('asian_quotation.car_45_4').price,
+            'asian_spreadsheet_option_id': self.id,
+            'asian_quotation_id': self.asian_quotation_id.id,
+            'car_4': self.asian_quotation_id.price_type_car_4 or self.env.ref('asian_quotation.car_4').price,
+            'car_7': self.asian_quotation_id.price_type_car_7 or self.env.ref('asian_quotation.car_7').price,
+            'car_16': self.asian_quotation_id.price_type_car_16 or self.env.ref('asian_quotation.car_16').price,
+            'car_29': self.asian_quotation_id.price_type_car_29 or self.env.ref('asian_quotation.car_29').price,
+            'car_35': self.asian_quotation_id.price_type_car_35 or self.env.ref('asian_quotation.car_35').price,
+            'car_45_1': self.asian_quotation_id.price_type_car_45_1 or self.env.ref('asian_quotation.car_45_1').price,
+            'car_45_2': self.asian_quotation_id.price_type_car_45_2 or self.env.ref('asian_quotation.car_45_2').price,
+            'car_45_3': self.asian_quotation_id.price_type_car_45_3 or self.env.ref('asian_quotation.car_45_3').price,
+            'car_45_4': self.asian_quotation_id.price_type_car_45_4 or self.env.ref('asian_quotation.car_45_4').price,
         })
+
         by_team = self.env['asian.spreadsheet.team.option'].create({
             'name': 'Nhóm khách',
             'apply': True,
             'type_line': 'by_team',
-            'asian_spreadsheet_option_id': res.id,
-            'asian_quotation_id': res.asian_quotation_id.id,
+            'asian_spreadsheet_option_id': self.id,
+            'asian_quotation_id': self.asian_quotation_id.id,
             'car_4': 2,
             'car_7': 3,
             'car_16': 6,
@@ -65,20 +102,87 @@ class AsianSpreadsheetOption(models.Model):
             'car_45_3': 30,
             'car_45_4': 35,
         })
+        return True
+
+    def create_net_option(self):
         net = self.env['asian.spreadsheet.net.option'].create({
             'name': 'Giá NET/khách',
             'apply': True,
             'type_line': 'net',
-            'asian_spreadsheet_option_id': res.id,
-            'asian_quotation_id': res.asian_quotation_id.id,
+            'asian_spreadsheet_option_id': self.id,
+            'asian_quotation_id': self.asian_quotation_id.id,
         })
         net_usd = self.env['asian.spreadsheet.net.option'].create({
             'name': 'GIÁ NET USD',
             'apply': True,
             'type_line': 'net_usd',
-            'asian_spreadsheet_option_id': res.id,
-            'asian_quotation_id': res.asian_quotation_id.id,
+            'asian_spreadsheet_option_id': self.id,
+            'asian_quotation_id': self.asian_quotation_id.id,
         })
+        return True
+
+    @api.model
+    def create(self, values):
+        res = super(AsianSpreadsheetOption, self).create(values)
+        if res.apply:
+            res.create_quotation_schedule()
+            res.create_spreadsheet_product()
+            res.create_team_option()
+            res.create_net_option()
+        # by_type = self.env['asian.spreadsheet.team.option'].create({
+        #     'name': 'Giá theo loại xe/KM',
+        #     'apply': True,
+        #     'type_line': 'by_type',
+        #     'asian_spreadsheet_option_id': res.id,
+        #     'asian_quotation_id': res.asian_quotation_id.id,
+        #     'car_4': self.env.ref('asian_quotation.car_4').price,
+        #     'car_7': self.env.ref('asian_quotation.car_7').price,
+        #     'car_16': self.env.ref('asian_quotation.car_16').price,
+        #     'car_29': self.env.ref('asian_quotation.car_29').price,
+        #     'car_35': self.env.ref('asian_quotation.car_35').price,
+        #     'car_45_1': self.env.ref('asian_quotation.car_45_1').price,
+        #     'car_45_2': self.env.ref('asian_quotation.car_45_2').price,
+        #     'car_45_3': self.env.ref('asian_quotation.car_45_3').price,
+        #     'car_45_4': self.env.ref('asian_quotation.car_45_4').price,
+        # })
+
+        # by_team = self.env['asian.spreadsheet.team.option'].create({
+        #     'name': 'Nhóm khách',
+        #     'apply': True,
+        #     'type_line': 'by_team',
+        #     'asian_spreadsheet_option_id': res.id,
+        #     'asian_quotation_id': res.asian_quotation_id.id,
+        #     'car_4': 2,
+        #     'car_7': 3,
+        #     'car_16': 6,
+        #     'car_29': 10,
+        #     'car_35': 15,
+        #     'car_45_1': 20,
+        #     'car_45_2': 25,
+        #     'car_45_3': 30,
+        #     'car_45_4': 35,
+        # })
+        # net = self.env['asian.spreadsheet.net.option'].create({
+        #     'name': 'Giá NET/khách',
+        #     'apply': True,
+        #     'type_line': 'net',
+        #     'asian_spreadsheet_option_id': res.id,
+        #     'asian_quotation_id': res.asian_quotation_id.id,
+        # })
+        # net_usd = self.env['asian.spreadsheet.net.option'].create({
+        #     'name': 'GIÁ NET USD',
+        #     'apply': True,
+        #     'type_line': 'net_usd',
+        #     'asian_spreadsheet_option_id': res.id,
+        #     'asian_quotation_id': res.asian_quotation_id.id,
+        # })
+        # if res.apply:
+        #     res.asian_quotation_id._compute_applied_asian_spreadsheet_option_id()
+
+        # res.asian_quotation_id.write({
+        #     'asian_spreadsheet_team_option_ids': [(6, 0, [by_type.id, by_team.id])],
+        #     'asian_spreadsheet_net_option_ids': [(6, 0, [net.id, net_usd.id])],
+        # })
 
         # for val in [
         #     {
@@ -177,6 +281,16 @@ class AsianSpreadsheetOption(models.Model):
 
         return res
 
+    def write(self, values):
+        res = super(AsianSpreadsheetOption, self).write(values)
+        if 'apply' in values and values.get('apply'):
+            apply_line = self.filtered(lambda o: o.apply)[:1]
+            if apply_line and not apply_line.asian_spreadsheet_team_option_ids:
+                apply_line.create_team_option()
+            if apply_line and not apply_line.asian_spreadsheet_net_option_ids:
+                apply_line.create_net_option()
+        return res
+
     @api.depends(
         'profit',
         'asian_quotation_id.asian_spreadsheet_net_option_ids.car_4',
@@ -188,7 +302,7 @@ class AsianSpreadsheetOption(models.Model):
 
         for rec in self:
             # net_line = rec.asian_quotation_id.asian_spreadsheet_net_option_ids.filtered(lambda o: o.type_line == 'net')
-            net_usd_line = rec.asian_quotation_id.asian_spreadsheet_net_option_ids.filtered(lambda o: o.type_line == 'net_usd')
+            net_usd_line = rec.asian_spreadsheet_net_option_ids.filtered(lambda o: o.type_line == 'net_usd')
 
             rec.car_4 = calc_car_x('4')
             rec.car_7 = calc_car_x('7')

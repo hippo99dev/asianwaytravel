@@ -44,10 +44,13 @@ class AsianSpreadsheetNetOption(models.Model):
         def calc_car_x(x):
             result = 0
             by_type_line_value = getattr(by_type_line, f'car_{x}') * 1000
-            by_team_line_value = getattr(by_team_line, f'car_{x}') * 1000
-            if by_team_line_value:
+            by_team_line_value = getattr(by_team_line, f'car_{x}')
+            if 0 < by_team_line_value < 15:
                 result = own_expenses + (general_expenses + transit_price * by_type_line_value) / by_team_line_value
-
+            elif 15 <= by_team_line_value < 30:
+                result = own_expenses + ((meal_price + ticket_price + show_price) + general_expenses + transit_price * by_type_line_value) / (by_team_line_value - 1)
+            elif by_team_line_value >= 30:
+                result = own_expenses + ((meal_price + ticket_price) * 2 + general_expenses + transit_price * by_type_line_value) / (by_team_line_value - 2)
             return result
 
         for rec in self:

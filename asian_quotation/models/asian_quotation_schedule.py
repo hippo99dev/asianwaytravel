@@ -17,5 +17,5 @@ class AsianQuotationSchedule(models.Model):
     weekday = fields.Char(string='Weekday')
     meal_ids = fields.Many2many(comodel_name='x.meal', string='Bữa ăn')
     template_id = fields.Many2one(string='Template', comodel_name='sale.order.template')
-
+    asian_quotation_id = fields.Many2one(string='Asian Quotation', comodel_name='asian.quotation')
     asian_spreadsheet_option_id = fields.Many2one(string='Asian Spreadsheet Option', comodel_name='asian.spreadsheet.option', ondelete='cascade')
