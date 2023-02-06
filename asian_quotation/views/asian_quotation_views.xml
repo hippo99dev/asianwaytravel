@@ -289,9 +289,9 @@
                             <field name="car_45_2"/>
                             <field name="car_45_3"/>
                             <field name="car_45_4" invisible="1"/>
-                            <field name="apply"/>
+                            <field name="apply" widget="boolean_toggle"/>
                             <field name="template_option_id" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
-                            <button name="action_copy_option" type="object" string="Copy Template Option" attrs="{'invisible': [('template_option_id', '=', False)]}" class="oe_highlight"/>
+                            <button name="action_copy_option" type="object" string="Copy" attrs="{'invisible': [('template_option_id', '=', False)]}" class="oe_highlight"/>
                             <field name="asian_spreadsheet_team_option_ids" invisible="1" widget="one2many_list"/>
                             <field name="asian_spreadsheet_net_option_ids" invisible="1" widget="one2many_list"/>
                             <field name="asian_spreadsheet_product_ids" invisible="1" widget="one2many_list"/>
@@ -315,6 +315,7 @@
         <field name="name">Báo giá</field>
         <field name="web_icon">asian_quotation,static/description/icon.png</field>
         <field name="action" ref="asian_quotation__act_window"/>
+        <field name="groups_id" eval="[(6,0, [ref('asia_group.asia_travel_sales_staff'), ref('asia_group.asia_travel_sales_senior_staff'), ref('asia_group.asia_travel_sales_manager')])]"/>
     </record>
 
 </odoo>

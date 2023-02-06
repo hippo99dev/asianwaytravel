@@ -2,8 +2,9 @@
 {
     'name': "Asian Quotation",
     'version': '0.1',
-    'depends': ['base', 'product', 'asia_sale', 'asia_contract'],
+    'depends': ['base', 'product', 'asia_sale', 'asia_contract', 'asia_group'],
     'data': [
+        'security/rules.xml',
         'security/ir.model.access.csv',
         'views/assets.xml',
         'data/default_vehicle_price.xml',
