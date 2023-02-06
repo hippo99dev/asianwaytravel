@@ -18,6 +18,7 @@ class AsianSpreadsheetOption(models.Model):
     car_45_3 = fields.Float(string='Xe 45 chỗ', compute='_compute_car_x')
     car_45_4 = fields.Float(string='Xe 45 chỗ', compute='_compute_car_x')
     apply = fields.Boolean(string='Tính báo giá')
+    is_selected = fields.Boolean(string='Đã tạo Tour', compute='_compute_is_selected', store=True)
     asian_quotation_id = fields.Many2one(string='Asian Quotation', comodel_name='asian.quotation', ondelete='cascade')
     asian_quotation_schedule_ids = fields.One2many(string='Asian Quotation Schedule', comodel_name='asian.quotation.schedule', inverse_name='asian_spreadsheet_option_id')
     asian_spreadsheet_product_ids = fields.One2many(string='Asian Spreadsheet Product', comodel_name='asian.spreadsheet.product', inverse_name='asian_spreadsheet_option_id')
@@ -404,3 +405,7 @@ class AsianSpreadsheetOption(models.Model):
             'asian_spreadsheet_net_option_ids': asian_spreadsheet_net_option_ids,
         })
 
+    @api.depends('asian_quotation_id.sale_order_ids', 'asian_quotation_id.sale_order_ids.state')
+    def _compute_is_selected(self):
+        for rec in self:
+            rec.is_selected = bool(rec.asian_quotation_id.sale_order_ids.filtered(lambda o: o.state != 'cancel' and o.asian_spreadsheet_option_id.id == rec.id))

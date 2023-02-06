@@ -178,9 +178,11 @@ class AsianQuotation(models.Model):
     @api.multi
     def action_create_sale_order(self):
         self.ensure_one()
+        option = self.asian_spreadsheet_option_ids.filtered(lambda o: o.apply)[:1]
         order = self.env['sale.order'].create({
             'partner_id': self.env.user.partner_id.id,
             'asian_quotation_id': self.id,
+            'asian_spreadsheet_option_id': option.id,
         })
         for line in self.asian_quotation_schedule_ids:
             self.env['sale.order.schedule'].create({

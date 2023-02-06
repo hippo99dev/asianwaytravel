@@ -19,7 +19,7 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_create_sale_order" type="object" string="Tạo Hồ sơ tour"/>
+                    <button name="action_create_sale_order" type="object" string="Tạo Hồ sơ tour" class="oe_highlight" attrs="{'invisible': [('sale_order_count', '&gt;', 0)]}"/>
                 </header>
                 <field name="sale_order_count" invisible="1"/>
                 <field name="applied_asian_spreadsheet_option_id" invisible="1"/>
@@ -35,12 +35,6 @@
                 <group>
                     <group>
                         <field name="name"/>
-<!--                        <div class="oe_title">-->
-<!--                            <label for="name"/>-->
-<!--                            <h1>-->
-<!--                                <field name="name"/>-->
-<!--                            </h1>-->
-<!--                        </div>-->
                     </group>
                     <group>
                         <field name="rate"/>
@@ -276,7 +270,7 @@
 
                 <group string="Giá bán">
                     <field name="asian_spreadsheet_option_ids" nolabel="1">
-                        <tree editable="bottom" even-row-color="1==1">
+                        <tree editable="bottom" even-row-color="1==1" decoration-info="is_selected == True">
                             <field name="name"/>
                             <field name="profit"/>
                             <field name="percent_profit"/>
@@ -291,6 +285,7 @@
                             <field name="car_45_4" invisible="1"/>
                             <field name="apply" widget="boolean_toggle"/>
                             <field name="template_option_id" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                            <field name="is_selected"/>
                             <button name="action_copy_option" type="object" string="Copy" attrs="{'invisible': [('template_option_id', '=', False)]}" class="oe_highlight"/>
                             <field name="asian_spreadsheet_team_option_ids" invisible="1" widget="one2many_list"/>
                             <field name="asian_spreadsheet_net_option_ids" invisible="1" widget="one2many_list"/>
