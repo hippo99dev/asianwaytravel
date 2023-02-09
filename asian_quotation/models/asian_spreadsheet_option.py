@@ -286,6 +286,10 @@ class AsianSpreadsheetOption(models.Model):
         res = super(AsianSpreadsheetOption, self).write(values)
         if 'apply' in values and values.get('apply'):
             apply_line = self.filtered(lambda o: o.apply)[:1]
+            if apply_line and not apply_line.asian_quotation_schedule_ids:
+                apply_line.create_quotation_schedule()
+            if apply_line and not apply_line.asian_spreadsheet_product_ids:
+                apply_line.create_spreadsheet_product()
             if apply_line and not apply_line.asian_spreadsheet_team_option_ids:
                 apply_line.create_team_option()
             if apply_line and not apply_line.asian_spreadsheet_net_option_ids:
@@ -295,6 +299,14 @@ class AsianSpreadsheetOption(models.Model):
     @api.depends(
         'profit',
         'asian_quotation_id.asian_spreadsheet_net_option_ids.car_4',
+        'asian_quotation_id.asian_spreadsheet_net_option_ids.car_7',
+        'asian_quotation_id.asian_spreadsheet_net_option_ids.car_16',
+        'asian_quotation_id.asian_spreadsheet_net_option_ids.car_29',
+        'asian_quotation_id.asian_spreadsheet_net_option_ids.car_35',
+        'asian_quotation_id.asian_spreadsheet_net_option_ids.car_45_1',
+        'asian_quotation_id.asian_spreadsheet_net_option_ids.car_45_2',
+        'asian_quotation_id.asian_spreadsheet_net_option_ids.car_45_3',
+        'asian_quotation_id.asian_spreadsheet_net_option_ids.car_45_4',
     )
     def _compute_car_x(self):
         def calc_car_x(x):

@@ -30,4 +30,14 @@
         <field name="perm_unlink" eval="0"/>
         <field name="groups" eval="[(4, ref('asia_group.asia_travel_sales_senior_staff'))]"/>
     </record>
+    <record id="asian_quotation_asia_travel_sales_manager_rules" model="ir.rule">
+        <field name="name">asian_quotation_asia_travel_sales_manager_rules</field>
+        <field name="model_id" ref="asian_quotation.model_asian_quotation"/>
+        <field name="domain_force">[]</field>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="groups" eval="[(4, ref('asia_group.asia_travel_sales_manager'))]"/>
+    </record>
 </odoo>
