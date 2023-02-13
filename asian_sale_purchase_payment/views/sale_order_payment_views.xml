@@ -148,14 +148,9 @@
                                 <field name="date_checkout"/>
                                 <field name="product_id"/>
                                 <field name="vendor_id"/>
-                                <field name="product_uom_qty"/>
-                                <field name="foc"/>
-                                <field name="allotment_use"/>
-                                <field name="price_unit"/>
-                                <field name="extra_fee"/>
+                                <field name="incurred_type"/>
                                 <field name="payment_method"/>
                                 <field name="payment_date"/>
-                                <field name="price_subtotal"/>
                                 <field name="product_qty_changed" invisible="not context.get('payment_after_tour')"/>
                                 <field name="price_unit_changed" invisible="not context.get('payment_after_tour')"/>
                                 <field name="price_subtotal_changed" invisible="not context.get('payment_after_tour')"/>

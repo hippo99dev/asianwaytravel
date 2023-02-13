@@ -5,7 +5,7 @@
     'depends': ['base', 'product', 'sale', 'purchase', 'sale_purchase', 'asia_sale', 'asia_purchase'],
     'data': [
         'security/ir_rule.xml',
-        'security/ir.model.access.csv',
+        # 'security/ir.model.access.csv',
         'data/ir_attachment.xml',
         'views/sale_order_payment_views.xml',
         'views/sale_order_views.xml',
