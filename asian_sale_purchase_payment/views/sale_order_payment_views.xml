@@ -141,6 +141,31 @@
                     <group>
                         <field name="others_line_ids" nolabel="1" options="{'no_open': True}" mode="tree" context="{'tree_view_ref' : 'asia_sale.payment_general_tree'}"/>
                     </group>
+                    <group string="Phát sinh" invisible="not context.get('payment_after_tour')">
+                        <field name="incurred_cost_payment_line_ids" nolabel="1" options="{'no_open': True}" mode="tree">
+                            <tree editable="bottom" decoration-danger="1==1">
+                                <field name="date_checkin"/>
+                                <field name="date_checkout"/>
+                                <field name="product_id"/>
+                                <field name="vendor_id"/>
+                                <field name="product_uom_qty"/>
+                                <field name="foc"/>
+                                <field name="allotment_use"/>
+                                <field name="price_unit"/>
+                                <field name="extra_fee"/>
+                                <field name="payment_method"/>
+                                <field name="payment_date"/>
+                                <field name="price_subtotal"/>
+                                <field name="product_qty_changed" invisible="not context.get('payment_after_tour')"/>
+                                <field name="price_unit_changed" invisible="not context.get('payment_after_tour')"/>
+                                <field name="price_subtotal_changed" invisible="not context.get('payment_after_tour')"/>
+                                <field name="note"/>
+
+                                <field name="payment_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
                     <group string="Landtour">
                         <field name="landtour_amount"/>
                     </group>

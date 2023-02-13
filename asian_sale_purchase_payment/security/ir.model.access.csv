@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_incurred_cost_payment_line,access_incurred_cost_payment_line,model_incurred_cost_payment_line,asia_group.asia_travel_sales_staff,1,1,1,1
+access_incurred_cost_payment_line,access_incurred_cost_payment_line,model_incurred_cost_payment_line,asia_group.asia_travel_sales_senior_staff,1,1,1,1
+access_incurred_cost_payment_line,access_incurred_cost_payment_line,model_incurred_cost_payment_line,asia_group.asia_travel_sales_manager,1,1,1,1
