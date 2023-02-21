@@ -154,7 +154,7 @@
                                 <field name="product_qty_changed" invisible="not context.get('payment_after_tour')"/>
                                 <field name="price_unit_changed" invisible="not context.get('payment_after_tour')"/>
                                 <field name="price_subtotal_changed" invisible="not context.get('payment_after_tour')"/>
-                                <field name="note"/>
+                                <field name="note_after_tour"/>
 
                                 <field name="payment_id" invisible="1"/>
                                 <field name="currency_id" invisible="1"/>
