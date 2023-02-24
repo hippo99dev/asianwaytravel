@@ -66,7 +66,12 @@
                                     attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
                                     context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'hotel'}"
                             >
-                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                <tree editable="bottom"
+                                    decoration-danger="decoration_value == 'danger'"
+                                    decoration-info="decoration_value == 'info'"
+                                    decoration-warning="decoration_value == 'warning'"
+                                >
+                                    <field name="decoration_value" groups="base.group_no_one"/>
                                     <field name="template_id" groups="base.group_no_one"/>
                                     <field name="product_types" groups="base.group_no_one"/>
                                     <field name="price_unit" string="Giá" groups="base.group_no_one"/>
@@ -126,7 +131,12 @@
                                     attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
                                     context="{'default_date_checkin':date_start, 'default_product_types': 'meal'}"
                             >
-                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                <tree editable="bottom"
+                                    decoration-danger="decoration_value == 'danger'"
+                                    decoration-info="decoration_value == 'info'"
+                                    decoration-warning="decoration_value == 'warning'"
+                                >
+                                    <field name="decoration_value" groups="base.group_no_one"/>
                                     <field name="currency_id" groups="base.group_no_one"/>
                                     <field name="template_id" groups="base.group_no_one"/>
                                     <field name="product_types" groups="base.group_no_one"/>
@@ -219,7 +229,12 @@
                                     context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'transportation'}"
 
                             >
-                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                <tree editable="bottom"
+                                    decoration-danger="decoration_value == 'danger'"
+                                    decoration-info="decoration_value == 'info'"
+                                    decoration-warning="decoration_value == 'warning'"
+                                >
+                                    <field name="decoration_value" groups="base.group_no_one"/>
                                     <field name="currency_id" groups="base.group_no_one"/>
                                     <field name="template_id" groups="base.group_no_one"/>
                                     <field name="product_types" groups="base.group_no_one"/>
@@ -286,7 +301,12 @@
                                     attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
                                     context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'plane_ticket'}"
                             >
-                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                <tree editable="bottom"
+                                    decoration-danger="decoration_value == 'danger'"
+                                    decoration-info="decoration_value == 'info'"
+                                    decoration-warning="decoration_value == 'warning'"
+                                >
+                                    <field name="decoration_value" groups="base.group_no_one"/>
                                     <field name="currency_id" groups="base.group_no_one"/>
                                     <field name="template_id" groups="base.group_no_one"/>
                                     <field name="product_types" groups="base.group_no_one"/>
@@ -342,7 +362,12 @@
                                mode="tree" options="{'no_open': True}"
                                attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
                                context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'guider'}">
-                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                <tree editable="bottom"
+                                    decoration-danger="decoration_value == 'danger'"
+                                    decoration-info="decoration_value == 'info'"
+                                    decoration-warning="decoration_value == 'warning'"
+                                >
+                                    <field name="decoration_value" groups="base.group_no_one"/>
                                     <field name="template_id" groups="base.group_no_one"/>
                                     <field name="product_types" groups="base.group_no_one"/>
                                     <field name="price_unit" string="Giá" groups="base.group_no_one"/>
@@ -402,7 +427,12 @@
                                     context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'others'}"
 
                             >
-                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                <tree editable="bottom"
+                                    decoration-danger="decoration_value == 'danger'"
+                                    decoration-info="decoration_value == 'info'"
+                                    decoration-warning="decoration_value == 'warning'"
+                                >
+                                    <field name="decoration_value" groups="base.group_no_one"/>
                                     <field name="currency_id" groups="base.group_no_one"/>
                                     <field name="template_id" groups="base.group_no_one"/>
                                     <field name="date_checkin" required="1" string="Ngày đi"/>
@@ -459,7 +489,12 @@
                                     attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
                                     context="{'default_date_checkin':date_start,'default_date_checkout':date_end, 'default_product_types': 'landtour'}"
                             >
-                                <tree editable="bottom" decoration-info="state == 'confirmed'">
+                                <tree editable="bottom"
+                                    decoration-danger="decoration_value == 'danger'"
+                                    decoration-info="decoration_value == 'info'"
+                                    decoration-warning="decoration_value == 'warning'"
+                                >
+                                    <field name="decoration_value" groups="base.group_no_one"/>
                                     <field name="currency_id" groups="base.group_no_one"/>
                                     <field name="template_id" groups="base.group_no_one"/>
                                     <field name="product_types" groups="base.group_no_one"/>
