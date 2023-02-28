@@ -6,7 +6,7 @@ class AsianSpreadsheetProduct(models.Model):
     _name = 'asian.spreadsheet.product'
     _description = 'Asian Spreadsheet Product'
     _rec_name = 'date_number'
-    _order = 'sequence'
+    _order = 'sequence, date_number'
 
     date_number = fields.Char('Date')
     travel_itinerary = fields.Text('Itinarary')

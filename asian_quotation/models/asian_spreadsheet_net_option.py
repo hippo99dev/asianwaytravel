@@ -92,12 +92,13 @@ class AsianSpreadsheetNetOption(models.Model):
                 car_45_3 = max(car_45_3 / rate, 0)
                 car_45_4 = max(car_45_4 / rate, 0)
 
-            rec.car_4 = car_4
-            rec.car_7 = car_7
-            rec.car_16 = car_16
-            rec.car_29 = car_29
-            rec.car_35 = car_35
-            rec.car_45_1 = car_45_1
-            rec.car_45_2 = car_45_2
-            rec.car_45_3 = car_45_3
-            rec.car_45_4 = car_45_4
+            vat = 1 + max(0, rec.asian_quotation_id.vat) / 100
+            rec.car_4 = car_4 * vat
+            rec.car_7 = car_7 * vat
+            rec.car_16 = car_16 * vat
+            rec.car_29 = car_29 * vat
+            rec.car_35 = car_35 * vat
+            rec.car_45_1 = car_45_1 * vat
+            rec.car_45_2 = car_45_2 * vat
+            rec.car_45_3 = car_45_3 * vat
+            rec.car_45_4 = car_45_4 * vat

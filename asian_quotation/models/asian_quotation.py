@@ -6,7 +6,7 @@ class AsianQuotation(models.Model):
     _description = 'Asian Quotation'
 
     name = fields.Char(string='Tiêu đề', required=True)
-    vat = fields.Float(string='VAT (%)', default=0, help='Điền vào % VAT. Eg: 25')
+    vat = fields.Float(string='VAT (%)', default=5, help='Điền vào % VAT. Eg: 25')
     rate = fields.Float(string='Tỉ giá', default=lambda self: self.env.ref('base.VND').rate)
     net_price = fields.Float(string='Giá NET SINGLE (USD)', compute='_compute_net_price', compute_sudo=True)
     # asian_quotation_schedule_ids = fields.Many2many(string='Asian Quotation Schedule', comodel_name='asian.quotation.schedule', copy=False)
