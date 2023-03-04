@@ -48,6 +48,7 @@ class AsianSpreadsheetOption(models.Model):
                 'template_id': line.template_id,
                 'asian_spreadsheet_option_id': self.id,
                 'asian_quotation_id': self.asian_quotation_id.id,
+                'x_day': line.x_day,
             })
 
     def create_spreadsheet_product(self):
@@ -346,6 +347,7 @@ class AsianSpreadsheetOption(models.Model):
                     'weekday': line.weekday,
                     'meal_ids': [(6, 0, line.meal_ids.ids)],
                     'asian_spreadsheet_option_id': self.id,
+                    'day': line.day,
                 })
             )
 

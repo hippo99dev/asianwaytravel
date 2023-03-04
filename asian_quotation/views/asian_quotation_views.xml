@@ -45,7 +45,8 @@
                 <group attrs="{'invisible': [('has_applied', '=', False)]}" string="Tour Program">
                     <field name="asian_quotation_schedule_ids" nolabel="1" widget="one2many" attrs="{'invisible': [('show_asian_quotation_schedule', '=', False)]}">
                         <tree editable="bottom">
-                            <field name="sequence" string="STT"/>
+                            <field name="x_day"/>
+                            <field name="sequence" string="STT" invisible="1"/>
                             <field name="schedule_date" invisible="1"/>
                             <field name="schedule_date_date"/>
                             <field name="weekday"/>
@@ -66,8 +67,9 @@
                             <field name="type_line" invisible="1"/>
                             <field name="date_number" attrs="{'readonly': [('type_line', '!=', False)]}"/>
                             <field name="travel_itinerary" attrs="{'readonly': [('type_line', '!=', False)]}"/>
-                            <field name="hotel_price" attrs="{'readonly': [('type_line', '!=', False)]}" sum="Sum"/>
+                            <field name="vendor_id"/>
                             <field name="hotel_id" context="{'show_price': {'sol_qty': 1}}" attrs="{'readonly': [('type_line', '!=', False)]}"/>
+                            <field name="hotel_price" attrs="{'readonly': [('type_line', '!=', False)]}" sum="Sum"/>
                             <field name="meal_price" attrs="{'readonly': [('type_line', '!=', False)]}" sum="Sum"/>
                             <field name="ticket_price" attrs="{'readonly': [('type_line', '!=', False)]}" sum="Sum"/>
                             <field name="show_price" attrs="{'readonly': [('type_line', '!=', False)]}" sum="Sum"/>

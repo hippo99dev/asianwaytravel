@@ -198,6 +198,7 @@ class AsianQuotation(models.Model):
                 'weekday': line.weekday,
                 'meal_ids': [(6, 0, line.meal_ids.ids)],
                 'template_id': line.template_id,
+                'x_day': line.x_day,
             })
 
         for line in self.asian_spreadsheet_product_ids:

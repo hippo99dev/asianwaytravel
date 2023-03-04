@@ -10,7 +10,7 @@ class AsianSpreadsheetProduct(models.Model):
 
     date_number = fields.Char('Date')
     travel_itinerary = fields.Text('Itinarary')
-
+    vendor_id = fields.Many2one('res.partner', string="Nhà cung cấp", domain=[('is_hotel', '=', True)])
     hotel_price = fields.Float(string='Hotel Price')
     # hotel_price = fields.Float(string='Giá khách sạn', compute='_compute_hotel_price', store=True)
     hotel_id = fields.Many2one(string='Hotel', comodel_name='product.product', domain=[('product_types', '=', 'hotel')])
@@ -43,3 +43,12 @@ class AsianSpreadsheetProduct(models.Model):
             suppliers = self.env['product.supplierinfo'].search(expression.AND([[('product_id', '=', rec.hotel_id.id)], domain]), order='price')
             if suppliers:
                 rec.hotel_price = suppliers[:1].price / 1000
+
+    @api.onchange('vendor_id', 'hotel_id')
+    def _onchange_vendor_id(self):
+        product_id_domain = [('product_types', '=', 'hotel')]
+        if self.vendor_id:
+            product_id_domain += [('vendor_id', '=', self.vendor_id.id)]
+        if self.hotel_id:
+            self.vendor_id = self.hotel_id.vendor_id
+        return {'domain': {'hotel_id': product_id_domain}}
